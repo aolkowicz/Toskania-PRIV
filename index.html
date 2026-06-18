@@ -521,10 +521,10 @@ function updateAvg(id, avg, count) {
 
 // ─── LOAD DATA ────────────────────────────────────────────────────────
 async function loadAllData() {
-  if (!SUPABASE_URL || !SUPABASE_KEY) {
-    for (let id = 1; id <= 12; id++) renderStars(id, true, 0);
-    return;
-  }
+  // Always render stars first so form is usable
+  for (let id = 1; id <= 12; id++) renderStars(id, true, pendingStars[id] || 0);
+
+  if (!SUPABASE_URL || !SUPABASE_KEY) return;
 
   // Load comments + ratings
   const rows = await sbFetch('comments?order=created_at.asc&select=*');
@@ -586,9 +586,11 @@ function renderComments(id, items) {
 }
 
 async function submitComment(id) {
-  const nameEl = document.getElementById(`name-${id}`);
-  const textEl = document.getElementById(`text-${id}`);
-  const btn    = nameEl.closest('.card').querySelector('.comment-submit');
+  const nameEl = document.getElementById('name-' + id);
+  const textEl = document.getElementById('text-' + id);
+  const btn    = document.querySelector('#card-' + id + ' .comment-submit');
+  if (!nameEl || !textEl || !btn) return;
+
   const author = nameEl.value.trim();
   const text   = textEl.value.trim();
   const rating = pendingStars[id] || 0;
@@ -598,7 +600,7 @@ async function submitComment(id) {
 
   btn.disabled = true; btn.textContent = '...';
 
-  if (SUPABASE_URL && SUPABASE_KEY) {
+  try {
     const res = await sbFetch('comments', {
       method: 'POST',
       body: JSON.stringify({ card_id: id, author, text, rating })
@@ -608,12 +610,14 @@ async function submitComment(id) {
       pendingStars[id] = 0;
       highlightStars(id, 0);
       await loadAllData();
+    } else {
+      // Fallback lokalny jeśli Supabase niedostępny
+      const el = document.getElementById('comments-' + id);
+      if (el) el.innerHTML += '<div class="comment-item"><div class="comment-author">' + escHtml(author) + '</div><div class="comment-text">' + escHtml(text) + '</div></div>';
+      nameEl.value = ''; textEl.value = '';
     }
-  } else {
-    // Fallback: lokalne demo bez Supabase
-    const el = document.getElementById(`comments-${id}`);
-    el.innerHTML += `<div class="comment-item"><div class="comment-author">${escHtml(author)} <span style="color:var(--muted);font-size:10px">(lokalnie)</span></div><div class="comment-text">${escHtml(text)}</div></div>`;
-    nameEl.value = ''; textEl.value = '';
+  } catch(e) {
+    console.error('submitComment error:', e);
   }
 
   btn.disabled = false; btn.textContent = 'Dodaj →';
