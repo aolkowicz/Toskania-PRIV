@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Toskania 2026 · Noclegi</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap');
 
@@ -184,7 +185,7 @@
 
 <main>
 
-  <div class="setup-banner" id="setup-banner">
+  <div class="setup-banner" id="setup-banner" style="display:none">
     <strong>⚙️ Konfiguracja Supabase — wymagana do współdzielonych komentarzy</strong>
     1. Załóż darmowe konto na <a href="https://supabase.com" target="_blank">supabase.com</a> → New Project<br>
     2. Wejdź w <strong>SQL Editor</strong> i wklej kod z pliku <code>supabase_setup.sql</code> (dołączony do paczki)<br>
@@ -199,9 +200,10 @@
 
   <div class="filters">
     <span class="filter-label">Filtruj:</span>
-    <button class="filter-btn active" onclick="filter('all',this)">Wszystkie (12)</button>
-    <button class="filter-btn" onclick="filter('booking',this)">Booking (7)</button>
-    <button class="filter-btn" onclick="filter('airbnb',this)">Airbnb (5)</button>
+    <button class="filter-btn active" onclick="filter('all',this)">Wybrane (5)</button>
+    <button class="filter-btn" onclick="filter('rejected',this)" style="border-color:#ccc;color:#aaa;font-style:italic;">Odrzucone (7)</button>
+    <button class="filter-btn" onclick="filter('booking',this)">Booking (2)</button>
+    <button class="filter-btn" onclick="filter('airbnb',this)">Airbnb (3)</button>
     <button class="filter-btn" onclick="filter('top',this)">Moje topki</button>
     <button class="filter-btn" onclick="filter('pool-priv',this)">Prywatny basen</button>
     <button class="filter-btn" onclick="filter('pet',this)">Zwierzęta OK</button>
@@ -211,12 +213,12 @@
   <!-- BOOKING SECTION -->
   <div class="section-divider" id="sec-booking">
     <div class="section-divider-line"></div>
-    <span class="section-divider-badge badge-booking">Booking.com · 7 obiektów</span>
+    <span class="section-divider-badge badge-booking">Booking.com</span>
     <div class="section-divider-line"></div>
   </div>
   <div class="cards" id="cards-booking">
 
-    <div class="card" id="card-1" data-platform="booking" data-top="true" data-pool="priv" data-pet="false">
+    <div class="card" id="card-1" data-rejected="true" data-platform="booking" data-top="true" data-pool="priv" data-pet="false">
       <button class="heart-btn" onclick="toggleLike(1,this)" title="Dodaj do ulubionych">♥</button>
       <div class="card-header">
         <div class="card-num-row"><span class="card-num">№ 1</span><span class="platform-badge platform-booking">Booking</span></div>
@@ -254,7 +256,7 @@
       <div class="community"><div class="community-title">Oceny i komentarze</div><div class="stars-row"><div class="stars" id="stars-2"></div><div class="avg-rating" id="avg-2"></div></div><div class="comments-list" id="comments-2"><p class="comment-empty">Brak komentarzy. Bądź pierwszy!</p></div><div class="comment-form"><input id="name-2" placeholder="Twoje imię" maxlength="30"><textarea id="text-2" placeholder="Napisz komentarz..." maxlength="300"></textarea><button class="comment-submit" onclick="submitComment(2)">Dodaj →</button></div></div>
     </div>
 
-    <div class="card" id="card-3" data-platform="booking" data-top="true" data-pool="shared" data-pet="false">
+    <div class="card" id="card-3" data-rejected="true" data-platform="booking" data-top="true" data-pool="shared" data-pet="false">
       <button class="heart-btn" onclick="toggleLike(3,this)" title="Dodaj do ulubionych">♥</button>
       <div class="card-header">
         <div class="card-num-row"><span class="card-num">№ 3</span><span class="platform-badge platform-booking">Booking</span></div>
@@ -273,7 +275,7 @@
       <div class="community"><div class="community-title">Oceny i komentarze</div><div class="stars-row"><div class="stars" id="stars-3"></div><div class="avg-rating" id="avg-3"></div></div><div class="comments-list" id="comments-3"><p class="comment-empty">Brak komentarzy. Bądź pierwszy!</p></div><div class="comment-form"><input id="name-3" placeholder="Twoje imię" maxlength="30"><textarea id="text-3" placeholder="Napisz komentarz..." maxlength="300"></textarea><button class="comment-submit" onclick="submitComment(3)">Dodaj →</button></div></div>
     </div>
 
-    <div class="card" id="card-4" data-platform="booking" data-top="false" data-pool="priv" data-pet="false">
+    <div class="card" id="card-4" data-rejected="true" data-platform="booking" data-top="false" data-pool="priv" data-pet="false">
       <button class="heart-btn" onclick="toggleLike(4,this)" title="Dodaj do ulubionych">♥</button>
       <div class="card-header">
         <div class="card-num-row"><span class="card-num">№ 4</span><span class="platform-badge platform-booking">Booking</span></div>
@@ -292,7 +294,7 @@
       <div class="community"><div class="community-title">Oceny i komentarze</div><div class="stars-row"><div class="stars" id="stars-4"></div><div class="avg-rating" id="avg-4"></div></div><div class="comments-list" id="comments-4"><p class="comment-empty">Brak komentarzy. Bądź pierwszy!</p></div><div class="comment-form"><input id="name-4" placeholder="Twoje imię" maxlength="30"><textarea id="text-4" placeholder="Napisz komentarz..." maxlength="300"></textarea><button class="comment-submit" onclick="submitComment(4)">Dodaj →</button></div></div>
     </div>
 
-    <div class="card" id="card-5" data-platform="booking" data-top="false" data-pool="shared" data-pet="true">
+    <div class="card" id="card-5" data-rejected="true" data-platform="booking" data-top="false" data-pool="shared" data-pet="true">
       <button class="heart-btn" onclick="toggleLike(5,this)" title="Dodaj do ulubionych">♥</button>
       <div class="card-header">
         <div class="card-num-row"><span class="card-num">№ 5</span><span class="platform-badge platform-booking">Booking</span></div>
@@ -311,7 +313,7 @@
       <div class="community"><div class="community-title">Oceny i komentarze</div><div class="stars-row"><div class="stars" id="stars-5"></div><div class="avg-rating" id="avg-5"></div></div><div class="comments-list" id="comments-5"><p class="comment-empty">Brak komentarzy. Bądź pierwszy!</p></div><div class="comment-form"><input id="name-5" placeholder="Twoje imię" maxlength="30"><textarea id="text-5" placeholder="Napisz komentarz..." maxlength="300"></textarea><button class="comment-submit" onclick="submitComment(5)">Dodaj →</button></div></div>
     </div>
 
-    <div class="card" id="card-6" data-platform="booking" data-top="false" data-pool="priv" data-pet="true">
+    <div class="card" id="card-6" data-rejected="true" data-platform="booking" data-top="false" data-pool="priv" data-pet="true">
       <button class="heart-btn" onclick="toggleLike(6,this)" title="Dodaj do ulubionych">♥</button>
       <div class="card-header">
         <div class="card-num-row"><span class="card-num">№ 6</span><span class="platform-badge platform-booking">Booking</span></div>
@@ -354,7 +356,7 @@
   <!-- AIRBNB SECTION -->
   <div class="section-divider" id="sec-airbnb">
     <div class="section-divider-line"></div>
-    <span class="section-divider-badge badge-airbnb">Airbnb · 5 obiektów · propozycje żony</span>
+    <span class="section-divider-badge badge-airbnb">Airbnb · propozycje żony</span>
     <div class="section-divider-line"></div>
   </div>
   <div style="margin-bottom:20px;padding:12px 16px;background:#fff3f5;border-left:3px solid var(--airbnb);border-radius:6px;font-size:13px;color:#333;font-style:italic;">
@@ -363,7 +365,7 @@
   </div>
   <div class="cards" id="cards-airbnb">
 
-    <div class="card" id="card-8" data-platform="airbnb" data-top="false" data-pool="shared" data-pet="true">
+    <div class="card" id="card-8" data-rejected="true" data-platform="airbnb" data-top="false" data-pool="shared" data-pet="true">
       <button class="heart-btn" onclick="toggleLike(8,this)" title="Dodaj do ulubionych">♥</button>
       <div class="card-header">
         <div class="card-num-row"><span class="card-num">№ 8</span><span class="platform-badge platform-airbnb">Airbnb</span></div>
@@ -420,7 +422,7 @@
       <div class="community"><div class="community-title">Oceny i komentarze</div><div class="stars-row"><div class="stars" id="stars-10"></div><div class="avg-rating" id="avg-10"></div></div><div class="comments-list" id="comments-10"><p class="comment-empty">Brak komentarzy. Bądź pierwszy!</p></div><div class="comment-form"><input id="name-10" placeholder="Twoje imię" maxlength="30"><textarea id="text-10" placeholder="Napisz komentarz..." maxlength="300"></textarea><button class="comment-submit" onclick="submitComment(10)">Dodaj →</button></div></div>
     </div>
 
-    <div class="card" id="card-11" data-platform="airbnb" data-top="false" data-pool="shared" data-pet="false">
+    <div class="card" id="card-11" data-rejected="true" data-platform="airbnb" data-top="false" data-pool="shared" data-pet="false">
       <button class="heart-btn" onclick="toggleLike(11,this)" title="Dodaj do ulubionych">♥</button>
       <div class="card-header">
         <div class="card-num-row"><span class="card-num">№ 11</span><span class="platform-badge platform-airbnb">Airbnb</span></div>
@@ -462,7 +464,6 @@
   <div class="no-results" id="no-results">Żaden obiekt nie spełnia wybranych kryteriów.</div>
 </main>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 <script>
 // ─── SUPABASE CONFIG ───────────────────────────────────────────────────
 const SUPABASE_URL = 'https://ldqtdbqqympoprrrefub.supabase.co';
@@ -597,8 +598,7 @@ async function submitComment(id) {
 
   btn.disabled = true; btn.textContent = '...';
 
-  // keys hardcoded — always hide banner
-document.getElementById('setup-banner').style.display = 'none';
+  if (SUPABASE_URL && SUPABASE_KEY) {
     const res = await sbFetch('comments', {
       method: 'POST',
       body: JSON.stringify({ card_id: id, author, text, rating })
@@ -634,8 +634,7 @@ async function toggleLike(id, btn) {
   localStorage.setItem('toskania_likes', JSON.stringify(localLikes));
   updateFavCount();
 
-  // keys hardcoded — always hide banner
-document.getElementById('setup-banner').style.display = 'none';
+  if (SUPABASE_URL && SUPABASE_KEY) {
     if (already) {
       await sbFetch(`likes?card_id=eq.${id}`, { method: 'DELETE' });
     } else {
@@ -657,6 +656,7 @@ function updateFavCount() {
 }
 
 // ─── MAP ───────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', function() {
 const locations = [
   { id:1,  name:"1. Villa Santa Gabriella",        lat:42.949, lng:10.885, plat:"booking", top:true  },
   { id:2,  name:"2. Borgo Amarrante",               lat:43.555, lng:10.899, plat:"booking", top:false },
@@ -714,6 +714,10 @@ function filter(type, btn) {
     else if (type === 'pool-priv') show = pool === 'priv';
     else if (type === 'pet')       show = pet;
     else if (type === 'favs')      show = localLikes.includes(id);
+    else if (type === 'rejected')  show = c.dataset.rejected === 'true';
+
+    // ukryj odrzucone we wszystkich filtrach poza 'rejected'
+    if (type !== 'rejected' && c.dataset.rejected === 'true') show = false;
 
     c.style.display = show ? 'flex' : 'none';
     if (show) visible++;
@@ -744,12 +748,28 @@ function escHtml(str) {
 }
 
 // ─── INIT ──────────────────────────────────────────────────────────────
-// keys hardcoded — always hide banner
 document.getElementById('setup-banner').style.display = 'none';
 
+// Ukryj odrzucone karty domyślnie (tylko 2,7,9,10,12 widoczne)
+document.querySelectorAll('.card[data-rejected="true"]').forEach(c => {
+  c.style.display = 'none';
+});
+
+// Ukryj sekcje jeśli wszystkie karty w nich odrzucone
+const bVinit = [...document.querySelectorAll('.card[data-platform="booking"]')].some(c => c.style.display !== 'none');
+const aVinit = [...document.querySelectorAll('.card[data-platform="airbnb"]')].some(c => c.style.display !== 'none');
+document.getElementById('sec-booking').style.display = bVinit ? '' : 'none';
+document.getElementById('sec-airbnb').style.display  = aVinit ? '' : 'none';
+
+// Ukryj markery odrzuconych kart na mapie
+markers.forEach(m => {
+  const card = document.getElementById('card-' + m.locData.id);
+  if (card && card.dataset.rejected === 'true') map.removeLayer(m);
+});
 
 updateFavCount();
 loadAllData();
+}); // end DOMContentLoaded
 </script>
 </body>
 </html>
