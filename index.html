@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Toskania 2026 · Noclegi</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --ink: #1a1a1a;
+    --ink2: #444;
+    --muted: #888;
+    --bg: #faf8f5;
+    --card: #ffffff;
+    --border: #e8e2d9;
+    --terra: #c4622d;
+    --terra-light: #f5ede7;
+    --booking: #003580;
+    --booking-light: #e8eef7;
+    --airbnb: #e0224d;
+    --airbnb-light: #fde8ed;
+    --green: #2d6a4f;
+    --green-light: #e8f4ef;
+    --gold: #a07830;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--ink);
+    color: #fff;
+    padding: 60px 40px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0;
+    width: 40%;
+    background: linear-gradient(135deg, transparent 40%, rgba(196,98,45,0.15) 100%);
+    pointer-events: none;
+  }
+  .header-eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--terra);
+    margin-bottom: 16px;
+  }
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+  header h1 span { color: var(--terra); }
+  .header-sub {
+    font-size: 15px;
+    color: rgba(255,255,255,0.6);
+    font-weight: 300;
+  }
+  .header-stats {
+    display: flex;
+    gap: 32px;
+    margin-top: 32px;
+    flex-wrap: wrap;
+  }
+  .stat { text-align: left; }
+  .stat-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1;
+  }
+  .stat-lbl {
+    font-size: 11px;
+    color: rgba(255,255,255,0.45);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 2px;
+  }
+
+  /* TOPKI BANNER */
+  .topki {
+    background: var(--terra);
+    padding: 14px 40px;
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .topki-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+  }
+  .topki-item {
+    font-size: 13px;
+    font-weight: 500;
+    color: #fff;
+  }
+  .topki-item span { opacity: 0.65; }
+
+  /* MAP SECTION */
+  .map-container {
+    max-width: 1100px;
+    margin: 30px auto 10px;
+    padding: 0 24px;
+  }
+  #map {
+    height: 450px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    z-index: 1;
+  }
+  .map-popup-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 2px;
+  }
+
+  /* MAIN */
+  main { max-width: 1100px; margin: 0 auto; padding: 20px 24px 80px; }
+
+  /* FILTERS */
+  .filters {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 36px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .filter-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-right: 4px;
+  }
+  .filter-btn {
+    padding: 7px 16px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--ink2);
+    font-size: 13px;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-weight: 400;
+  }
+  .filter-btn:hover { border-color: var(--terra); color: var(--terra); }
+  .filter-btn.active { background: var(--terra); color: #fff; border-color: var(--terra); font-weight: 500; }
+
+  /* SECTION LABEL */
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 48px 0 28px;
+  }
+  .section-divider-line { flex: 1; height: 1px; background: var(--border); }
+  .section-divider-text {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .section-divider-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .badge-booking { background: var(--booking-light); color: var(--booking); }
+  .badge-airbnb { background: var(--airbnb-light); color: var(--airbnb); }
+
+  /* CARDS GRID */
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
+
+  /* CARD */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: box-shadow 0.2s, transform 0.2s;
+    display: flex;
+    flex-direction: column;
+  }
+  .card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.08); transform: translateY(-2px); }
+
+  .card-header {
+    padding: 20px 20px 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .card-num-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+  }
+  .card-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .platform-badge {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 10px;
+  }
+  .platform-booking { background: var(--booking-light); color: var(--booking); }
+  .platform-airbnb { background: var(--airbnb-light); color: var(--airbnb); }
+
+  .card-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+  .card-location {
+    font-size: 12px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .card-location::before { content: '↗'; font-size: 10px; }
+
+  .card-price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    margin-top: 10px;
+  }
+  .card-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--green);
+  }
+  .card-price-label { font-size: 12px; color: var(--muted); }
+
+  /* COMMENT */
+  .card-comment {
+    margin: 0;
+    padding: 12px 20px;
+    background: var(--terra-light);
+    border-left: 3px solid var(--terra);
+    font-size: 13px;
+    color: var(--ink2);
+    font-style: italic;
+    line-height: 1.5;
+  }
+  .card-comment strong {
+    display: block;
+    font-style: normal;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--terra);
+    margin-bottom: 3px;
+  }
+
+  /* BODY */
+  .card-body { padding: 16px 20px; flex: 1; display: flex; flex-direction: column; gap: 14px; }
+
+  .card-section-title {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 5px;
+  }
+  .card-list { list-style: none; display: flex; flex-direction: column; gap: 3px; }
+  .card-list li {
+    font-size: 13px;
+    color: var(--ink2);
+    padding-left: 12px;
+    position: relative;
+    line-height: 1.45;
+  }
+  .card-list li::before {
+    content: '–';
+    position: absolute;
+    left: 0;
+    color: var(--muted);
+  }
+
+  /* RATING */
+  .card-rating {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--green-light);
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 13px;
+  }
+  .rating-score { font-weight: 600; color: var(--green); }
+  .rating-label { color: var(--ink2); }
+  .rating-count { color: var(--muted); font-size: 12px; }
+  .rating-warn { background: #fff8e1; }
+  .rating-warn .rating-score { color: var(--gold); }
+
+  /* FOOTER */
+  .card-footer {
+    padding: 12px 20px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--terra);
+    text-decoration: none;
+    transition: opacity 0.15s;
+  }
+  .card-link:hover { opacity: 0.75; }
+  .card-link svg { width: 14px; height: 14px; }
+
+  .top-tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--terra);
+    background: var(--terra-light);
+    padding: 3px 9px;
+    border-radius: 8px;
+  }
+
+  /* no results */
+  .no-results {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--muted);
+    font-size: 15px;
+    display: none;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    header { padding: 40px 20px 36px; }
+    .topki { padding: 12px 20px; gap: 12px; }
+    main { padding: 24px 16px 60px; }
+    .header-stats { gap: 20px; }
+    #map { height: 300px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-eyebrow">7–16 września 2026 · 9 nocy · 2 osoby</div>
+  <h1>Toskania <span>2026</span></h1>
+  <p class="header-sub">Przegląd 12 propozycji noclegów · Booking.com i Airbnb</p>
+  <div class="header-stats">
+    <div class="stat"><div class="stat-val">12</div><div class="stat-lbl">propozycji</div></div>
+    <div class="stat"><div class="stat-val">9</div><div class="stat-lbl">nocy</div></div>
+    <div class="stat"><div class="stat-val">2 382</div><div class="stat-lbl">PLN minimum</div></div>
+    <div class="stat"><div class="stat-val">4 159</div><div class="stat-lbl">PLN maximum</div></div>
+  </div>
+</header>
+
+<div class="topki">
+  <span class="topki-label">Topki</span>
+  <span class="topki-item">★ Booking: <span>1. Villa Santa Gabriella · 3. Trilocale con piscina</span></span>
+  <span class="topki-item">★ Airbnb: <span>9. Gniazdko w wieży · 12. San Francesco</span></span>
+</div>
+
+<div class="map-container">
+  <div id="map"></div>
+</div>
+
+<main>
+  <div class="filters">
+    <span class="filter-label">Filtruj:</span>
+    <button class="filter-btn active" onclick="filter('all',this)">Wszystkie (12)</button>
+    <button class="filter-btn" onclick="filter('booking',this)">Booking (7)</button>
+    <button class="filter-btn" onclick="filter('airbnb',this)">Airbnb (5)</button>
+    <button class="filter-btn" onclick="filter('top',this)">Moje topki</button>
+    <button class="filter-btn" onclick="filter('pool-priv',this)">Prywatny basen</button>
+    <button class="filter-btn" onclick="filter('pet',this)">Zwierzęta OK</button>
+  </div>
+
+  <div class="section-divider" id="sec-booking">
+    <div class="section-divider-line"></div>
+    <span class="section-divider-badge badge-booking">Booking.com · 7 obiektów</span>
+    <div class="section-divider-line"></div>
+  </div>
+
+  <div class="cards" id="cards-booking">
+
+    <div class="card" id="card-1" data-platform="booking" data-top="true" data-pool="priv" data-pet="false">
+      <div class="card-header">
+        <div class="card-num-row">
+          <span class="card-num">№ 1</span>
+          <span class="platform-badge platform-booking">Booking</span>
+        </div>
+        <div class="card-name">Villa Santa Gabriella</div>
+        <div class="card-location">Casa Caviglieri, Maremma</div>
+        <div class="card-price-row">
+          <span class="card-price">4 144 PLN</span>
+          <span class="card-price-label">/ 9 nocy</span>
+        </div>
+      </div>
+      <div class="card-comment"><strong>Mój komentarz</strong>Najdalej na południe co jest jakimś minusem, ale blisko trasy na jakieś ruchy. Moja topka jeśli chodzi o estetykę. Blisko nadmorskiej miejscowości.</div>
+      <div class="card-body">
+        <div>
+          <div class="card-section-title">Odległości</div>
+          <ul class="card-list">
+            <li>Morze (Punta Ala / Follonica): ~15 km</li>
+            <li>Follonica: ~11 km</li>
+            <li>Grosseto: ~40 km</li>
+            <li>Klub Golf Punta Ala: 26 km</li>
+          </ul>
+        </div>
+        <div>
+          <div class="card-section-title">Udogodnienia</div>
+          <ul class="card-list">
+            <li>Prywatny basen całoroczny</li>
+            <li>Wi-Fi · parking · klimatyzacja</li>
+            <li>Kuchnia · taras · ogród</li>
+            <li>Zakaz zwierząt</li>
+          </ul>
+        </div>
+        <div>
+          <div class="card-section-title">Informacje</div>
+          <ul class="card-list">
+            <li>45–50 m² · 1 sypialnia · 1 łazyenka</li>
+            <li>Czystość 9,9 · personel 10,0</li>
+            <li>Bezpłatna anulacja przed 24.08</li>
+          </ul>
+        </div>
+        <div><span class="card-rating"><span class="rating-score">9,4</span><span class="rating-label">Znakomity</span><span class="rating-count">13 opinii</span></span></div>
+      </div>
+      <div class="card-footer">
+        <span class="top-tag">★ Moja topka</span>
+        <a class="card-link" href="https://www.booking.com/hotel/it/villa-santa-gabriella.pl.html?label=kWjPkLpEERQJ&sid=cc6d38ecc417480165c0285062463aa6&aid=7944856" target="_blank">Otwórz Booking <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+      </div>
+    </div>
+
+    <div class="card" id="card-2" data-platform="booking" data-top="false" data-pool="shared" data-pet="true">
+      <div class="card-header">
+        <div class="card-num-row"><span class="card-num">№ 2</span><span class="platform-badge platform-booking">Booking</span></div>
+        <div class="card-name">Borgo Amarrante</div>
+        <div class="card-location">Montaione, k. San Gimignano</div>
+        <div class="card-price-row"><span class="card-price">3 856 PLN</span><span class="card-price-label">/ 9 nocy</span></div>
+      </div>
+      <div class="card-comment"><strong>Mój komentarz</strong>Super widoki. Fajny standard. Niestety apartament a nie dom. Lokalizacja — no cóż, pozostawia do życzenia. Bardzo bardzo fajny basen!!!!!</div>
+      <div class="card-body">
+        <div><div class="card-section-title">Odległości</div><ul class="card-list"><li>Morze (Livorno): ~55 km</li><li>San Gimignano: ~10 km</li><li>Certaldo: 9 km · Siena: ~40 km</li><li>Florencja: ~51 km</li></ul></div>
+        <div><div class="card-section-title">Udogodnienia</div><ul class="card-list"><li>Basen infinity bez krawędzi (wspólny)</li><li>Wi-Fi · parking · grill · tenis stołowy</li><li>Winnica i gaj oliwny na miejscu</li><li>Zwierzęta po uzgodnieniu</li></ul></div>
+        <div><div class="card-section-title">Informacje</div><ul class="card-list"><li>40–100 m² · 1–3 sypialnie (kilka wariantów)</li><li>Wymeldowanie 7:00–9:00 (!)</li></ul></div>
+        <div><span class="card-rating"><span class="rating-score">8,5</span><span class="rating-label">Bardzo dobry</span><span class="rating-count">68 opinii</span></span></div>
+      </div>
+      <div class="card-footer">
+        <span></span>
+        <a class="card-link" href="https://www.booking.com/hotel/it/casa-vacanze-amarrante.pl.html?label=kWjPkLpEERQJ&sid=cc6d38ecc417480165c0285062463aa6&aid=7944856" target="_blank">Otwórz Booking <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+      </div>
+    </div>
+
+    <div class="card" id="card-3" data-platform="booking" data-top="true" data-pool="shared" data-pet="false">
+      <div class="card-header">
+        <div class="card-num-row"><span class="card-num">№ 3</span><span class="platform-badge platform-booking">Booking</span></div>
+        <div class="card-name">Trilocale con piscina</div>
+        <div class="card-location">Nibbiaia, Wybrzeże Toskańskie</div>
+        <div class="card-price-row"><span class="card-price">3 753 PLN</span><span class="card-price-label">/ 9 nocy</span></div>
+      </div>
+      <div class="card-comment"><strong>Mój komentarz</strong>Lokalizacja blisko morza (w miarę). Standard średni i przeraża mnie ta część restauracyjna na zdjęciach. Ale lubię to miejsce. Jest w moim top.</div>
+      <div class="card-body">
+        <div><div class="card-section-title">Odległości</div><ul class="card-list"><li>Morze (Fortullino): 5–7 km</li><li>Livorno: ~22 km · Cecina: ~15 km</li><li>Restauracja Osteria dalle Bimbe: 150 m</li></ul></div>
+        <div><div class="card-section-title">Udogodnienia</div><ul class="card-list"><li>Basen sezonowy z widokiem na morze + brodzik</li><li>Restauracja na miejscu · bar · obsługa pokoju</li><li>Wi-Fi · parking · wypożyczalnia rowerów</li><li>Zakaz zwierząt</li></ul></div>
+        <div><div class="card-section-title">Informacje</div><ul class="card-list"><li>55 m² · 2 sypialnie · 2 łóżka podwójne</li><li>Bezpłatna anulacja przed 24.08</li></ul></div>
+        <div><span class="card-rating"><span class="rating-score">9,0</span><span class="rating-label">Znakomity</span><span class="rating-count">11 opinii</span></span></div>
+      </div>
+      <div class="card-footer">
+        <span class="top-tag">★ Moja topka</span>
+        <a class="card-link" href="https://www.booking.com/hotel/it/trilocale-con-piscina-nibbiaia.pl.html?label=kWjPkLpEERQJ&sid=cc6d38ecc417480165c0285062463aa6&aid=7944856" target="_blank">Otwórz Booking <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+      </div>
+    </div>
+
+    <div class="card" id="card-4" data-platform="booking" data-top="false" data-pool="priv" data-pet="false">
+      <div class="card-header">
+        <div class="card-num-row"><span class="card-num">№ 4</span><span class="platform-badge platform-booking">Booking</span></div>
+        <div class="card-name">Casa il Borgo Toscano</div>
+        <div class="card-location">San Vivaldo, k. San Gimignano</div>
+        <div class="card-price-row"><span class="card-price">3 489 PLN</span><span class="card-price-label">/ 9 nocy · wino w cenie</span></div>
+      </div>
+      <div class="card-comment"><strong>Mój komentarz</strong>Tutaj duże lokum. Podoba mi się jasny klimat. Lokalizacja wydaje się ok.</div>
+      <div class="card-body">
+        <div><div class="card-section-title">Odległości</div><ul class="card-list"><li>Morze (Livorno): ~55 km</li><li>San Gimignano: 14 km · Certaldo: 18 km</li><li>Restauracja Osteria San Vivaldo: 3,7 km</li><li>Restauracja Il Focolare: 3,8 km</li></ul></div>
+        <div><div class="card-section-title">Udogodnienia</div><ul class="card-list"><li>Prywatny basen całoroczny · patio · ogród</li><li>Wi-Fi · parking · zmywarka · pralka</li><li>Butelka wina powitalna · zakaz zwierząt</li></ul></div>
+        <div><div class="card-section-title">Informacje</div><ul class="card-list"><li>60 m² · 1 sypialnia + łóżko piętrowe</li><li>Bezpłatna anulacja przed 6.09</li></ul></div>
+        <div><span class="card-rating"><span class="rating-score">8,5</span><span class="rating-label">Bardzo
