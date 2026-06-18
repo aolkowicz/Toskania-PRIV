@@ -467,7 +467,7 @@
 <script>
 // ─── SUPABASE CONFIG ───────────────────────────────────────────────────
 const SUPABASE_URL = 'https://ldqtdbqqympoprrrefub.supabase.co';
-const SUPABASE_KEY = 'sb_publishable__BWIdFRTX_gxGG8b1_uBpQ_Z3yyCCKh';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxkcXRkYnFxeW1wb3BycnJlZnViIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE4MDE2ODMsImV4cCI6MjA5NzM3NzY4M30.YOxLWlGbROeCi6rpaHGtMHpGB9OKXcN-g0MT-7W45Ts';
 
 function saveSupabaseConfig() {
   // Klucze są już wbudowane — ta funkcja nie jest potrzebna
@@ -477,6 +477,7 @@ function saveSupabaseConfig() {
 function sbFetch(path, opts = {}) {
   return fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
     headers: {
+      'apikey': SUPABASE_KEY,
       'Authorization': `Bearer ${SUPABASE_KEY}`,
       'Content-Type': 'application/json',
       'Prefer': 'return=representation',
