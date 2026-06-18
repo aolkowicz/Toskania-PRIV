@@ -1526,7 +1526,7 @@ async function submitComment(id) {
 }
 
 // ─── LIKES ─────────────────────────────────────────────────────────────
-const localLikes = JSON.parse(localStorage.getItem('toskania_likes') || '[]');
+const localLikes = JSON.parse(localStorage.getItem('toskania_likes') || '[]').map(Number);
 
 async function toggleLike(id, btn) {
   const already = localLikes.includes(id);
@@ -1559,6 +1559,11 @@ function updateFavCount() {
     const id = parseInt(btn.closest('.card').id.replace('card-', ''));
     btn.classList.toggle('liked', localLikes.includes(id));
   });
+  // If favs filter is active, refresh immediately
+  const favBtn = document.querySelector('.filter-btn-fav.active');
+  if (favBtn) {
+    filter('favs', favBtn);
+  }
 }
 
 // ─── MAP ───────────────────────────────────────────────────────────────
@@ -1728,6 +1733,11 @@ document.addEventListener('DOMContentLoaded', function() {
   startCardSliders();
   updateFavCount();
   loadAllData();
+  // Set default filter: favs if any liked, else 'all'
+  if (localLikes.length > 0) {
+    const favBtn = document.querySelector('.filter-btn-fav');
+    if (favBtn) filter('favs', favBtn);
+  }
   // Load task count for badge
   sbFetch('tasks?select=id,done').then(rows => { if(rows) updateTaskCount(rows); });
 });
