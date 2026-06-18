@@ -99,4 +99,739 @@
   /* TOPKI BANNER */
   .topki {
     background: var(--terra);
-    padding: 14px
+    padding: 14px 40px;
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .topki-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+  }
+  .topki-item {
+    font-size: 13px;
+    font-weight: 500;
+    color: #fff;
+  }
+  .topki-item span { opacity: 0.65; }
+
+  /* MAP SECTION */
+  .map-container {
+    max-width: 1100px;
+    margin: 30px auto 10px;
+    padding: 0 24px;
+  }
+  #map {
+    height: 450px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    z-index: 1;
+  }
+  .map-popup-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 2px;
+  }
+
+  /* MAIN */
+  main { max-width: 1100px; margin: 0 auto; padding: 20px 24px 80px; }
+
+  /* FILTERS */
+  .filters {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 36px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .filter-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-right: 4px;
+  }
+  .filter-btn {
+    padding: 7px 16px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--ink2);
+    font-size: 13px;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-weight: 400;
+  }
+  .filter-btn:hover { border-color: var(--terra); color: var(--terra); }
+  .filter-btn.active { background: var(--terra); color: #fff; border-color: var(--terra); font-weight: 500; }
+
+  /* SECTION LABEL */
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 48px 0 28px;
+  }
+  .section-divider-line { flex: 1; height: 1px; background: var(--border); }
+  .section-divider-text {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .section-divider-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .badge-booking { background: var(--booking-light); color: var(--booking); }
+  .badge-airbnb { background: var(--airbnb-light); color: var(--airbnb); }
+
+  /* CARDS GRID */
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
+
+  /* CARD */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: box-shadow 0.2s, transform 0.2s;
+    display: flex;
+    flex-direction: column;
+  }
+  .card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.08); transform: translateY(-2px); }
+
+  .card-header {
+    padding: 20px 20px 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .card-num-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+  }
+  .card-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .platform-badge {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 10px;
+  }
+  .platform-booking { background: var(--booking-light); color: var(--booking); }
+  .platform-airbnb { background: var(--airbnb-light); color: var(--airbnb); }
+
+  .card-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+  .card-location {
+    font-size: 12px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .card-location::before { content: '↗'; font-size: 10px; }
+
+  .card-price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    margin-top: 10px;
+  }
+  .card-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--green);
+  }
+  .card-price-label { font-size: 12px; color: var(--muted); }
+
+  /* COMMENT */
+  .card-comment {
+    margin: 0;
+    padding: 12px 20px;
+    background: var(--terra-light);
+    border-left: 3px solid var(--terra);
+    font-size: 13px;
+    color: var(--ink2);
+    font-style: italic;
+    line-height: 1.5;
+  }
+  .card-comment strong {
+    display: block;
+    font-style: normal;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--terra);
+    margin-bottom: 3px;
+  }
+
+  /* BODY */
+  .card-body { padding: 16px 20px; flex: 1; display: flex; flex-direction: column; gap: 14px; }
+
+  .card-section-title {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 5px;
+  }
+  .card-list { list-style: none; display: flex; flex-direction: column; gap: 3px; }
+  .card-list li {
+    font-size: 13px;
+    color: var(--ink2);
+    padding-left: 12px;
+    position: relative;
+    line-height: 1.45;
+  }
+  .card-list li::before {
+    content: '–';
+    position: absolute;
+    left: 0;
+    color: var(--muted);
+  }
+
+  /* RATING */
+  .card-rating {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--green-light);
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 13px;
+  }
+  .rating-score { font-weight: 600; color: var(--green); }
+  .rating-label { color: var(--ink2); }
+  .rating-count { color: var(--muted); font-size: 12px; }
+  .rating-warn { background: #fff8e1; }
+  .rating-warn .rating-score { color: var(--gold); }
+
+  /* FOOTER */
+  .card-footer {
+    padding: 12px 20px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--terra);
+    text-decoration: none;
+    transition: opacity 0.15s;
+  }
+  .card-link:hover { opacity: 0.75; }
+  .card-link svg { width: 14px; height: 14px; }
+
+  .top-tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--terra);
+    background: var(--terra-light);
+    padding: 3px 9px;
+    border-radius: 8px;
+  }
+
+  /* no results */
+  .no-results {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--muted);
+    font-size: 15px;
+    display: none;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    header { padding: 40px 20px 36px; }
+    .topki { padding: 12px 20px; gap: 12px; }
+    main { padding: 24px 16px 60px; }
+    .header-stats { gap: 20px; }
+    #map { height: 300px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-eyebrow">7–16 września 2026 · 9 nocy · 2 osoby</div>
+  <h1>Toskania <span>2026</span></h1>
+  <p class="header-sub">Przegląd 12 propozycji noclegów · Booking.com i Airbnb</p>
+  <div class="header-stats">
+    <div class="stat"><div class="stat-val">12</div><div class="stat-lbl">propozycji</div></div>
+    <div class="stat"><div class="stat-val">9</div><div class="stat-lbl">nocy</div></div>
+    <div class="stat"><div class="stat-val">2 382</div><div class="stat-lbl">PLN minimum</div></div>
+    <div class="stat"><div class="stat-val">4 159</div><div class="stat-lbl">PLN maximum</div></div>
+  </div>
+</header>
+
+<div class="topki">
+  <span class="topki-label">Topki</span>
+  <span class="topki-item">★ Booking: <span>1. Villa Santa Gabriella · 3. Trilocale con piscina</span></span>
+  <span class="topki-item">★ Airbnb: <span>9. Gniazdko w wieży · 12. San Francesco</span></span>
+</div>
+
+<div class="map-container">
+  <div id="map"></div>
+</div>
+
+<main>
+  <div class="filters">
+    <span class="filter-label">Filtruj:</span>
+    <button class="filter-btn active" onclick="filter('all',this)">Wszystkie (12)</button>
+    <button class="filter-btn" onclick="filter('booking',this)">Booking (7)</button>
+    <button class="filter-btn" onclick="filter('airbnb',this)">Airbnb (5)</button>
+    <button class="filter-btn" onclick="filter('top',this)">Moje topki</button>
+    <button class="filter-btn" onclick="filter('pool-priv',this)">Prywatny basen</button>
+    <button class="filter-btn" onclick="filter('pet',this)">Zwierzęta OK</button>
+  </div>
+
+  <div class="section-divider" id="sec-booking">
+    <div class="section-divider-line"></div>
+    <span class="section-divider-badge badge-booking">Booking.com · 7 obiektów</span>
+    <div class="section-divider-line"></div>
+  </div>
+
+  <div class="cards" id="cards-booking">
+
+    <div class="card" id="card-1" data-platform="booking" data-top="true" data-pool="priv" data-pet="false">
+      <div class="card-header">
+        <div class="card-num-row">
+          <span class="card-num">№ 1</span>
+          <span class="platform-badge platform-booking">Booking</span>
+        </div>
+        <div class="card-name">Villa Santa Gabriella</div>
+        <div class="card-location">Casa Caviglieri, Maremma</div>
+        <div class="card-price-row">
+          <span class="card-price">4 144 PLN</span>
+          <span class="card-price-label">/ 9 nocy</span>
+        </div>
+      </div>
+      <div class="card-comment"><strong>Mój komentarz</strong>Najdalej na południe co jest jakimś minusem, ale blisko trasy na jakieś ruchy. Moja topka jeśli chodzi o estetykę. Blisko nadmorskiej miejscowości.</div>
+      <div class="card-body">
+        <div>
+          <div class="card-section-title">Odległości</div>
+          <ul class="card-list">
+            <li>Morze (Punta Ala / Follonica): ~15 km</li>
+            <li>Follonica: ~11 km</li>
+            <li>Grosseto: ~40 km</li>
+            <li>Klub Golf Punta Ala: 26 km</li>
+          </ul>
+        </div>
+        <div>
+          <div class="card-section-title">Udogodnienia</div>
+          <ul class="card-list">
+            <li>Prywatny basen całoroczny</li>
+            <li>Wi-Fi · parking · klimatyzacja</li>
+            <li>Kuchnia · taras · ogród</li>
+            <li>Zakaz zwierząt</li>
+          </ul>
+        </div>
+        <div>
+          <div class="card-section-title">Informacje</div>
+          <ul class="card-list">
+            <li>45–50 m² · 1 sypialnia · 1 łazienka</li>
+            <li>Czystość 9,9 · personel 10,0</li>
+            <li>Bezpłatna anulacja przed 24.08</li>
+          </ul>
+        </div>
+        <div><span class="card-rating"><span class="rating-score">9,4</span><span class="rating-label">Znakomity</span><span class="rating-count">13 opinii</span></span></div>
+      </div>
+      <div class="card-footer">
+        <span class="top-tag">★ Moja topka</span>
+        <a class="card-link" href="https://www.booking.com/hotel/it/villa-santa-gabriella.pl.html?label=kWjPkLpEERQJ&sid=cc6d38ecc417480165c0285062463aa6&aid=7944856" target="_blank">Otwórz Booking <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+      </div>
+    </div>
+
+    <div class="card" id="card-2" data-platform="booking" data-top="false" data-pool="shared" data-pet="true">
+      <div class="card-header">
+        <div class="card-num-row"><span class="card-num">№ 2</span><span class="platform-badge platform-booking">Booking</span></div>
+        <div class="card-name">Borgo Amarrante</div>
+        <div class="card-location">Montaione, k. San Gimignano</div>
+        <div class="card-price-row"><span class="card-price">3 856 PLN</span><span class="card-price-label">/ 9 nocy</span></div>
+      </div>
+      <div class="card-comment"><strong>Mój komentarz</strong>Super widoki. Fajny standard. Niestety apartament a nie dom. Lokalizacja — no cóż, pozostawia do życzenia. Bardzo bardzo fajny basen!!!!!</div>
+      <div class="card-body">
+        <div><div class="card-section-title">Odległości</div><ul class="card-list"><li>Morze (Livorno): ~55 km</li><li>San Gimignano: ~10 km</li><li>Certaldo: 9 km · Siena: ~40 km</li><li>Florencja: ~51 km</li></ul></div>
+        <div><div class="card-section-title">Udogodnienia</div><ul class="card-list"><li>Basen infinity bez krawędzi (wspólny)</li><li>Wi-Fi · parking · grill · tenis stołowy</li><li>Winnica i gaj oliwny na miejscu</li><li>Zwierzęta po uzgodnieniu</li></ul></div>
+        <div><div class="card-section-title">Informacje</div><ul class="card-list"><li>40–100 m² · 1–3 sypialnie (kilka wariantów)</li><li>Wymeldowanie 7:00–9:00 (!)</li></ul></div>
+        <div><span class="card-rating"><span class="rating-score">8,5</span><span class="rating-label">Bardzo dobry</span><span class="rating-count">68 opinii</span></span></div>
+      </div>
+      <div class="card-footer">
+        <span></span>
+        <a class="card-link" href="https://www.booking.com/hotel/it/casa-vacanze-amarrante.pl.html?label=kWjPkLpEERQJ&sid=cc6d38ecc417480165c0285062463aa6&aid=7944856" target="_blank">Otwórz Booking <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+      </div>
+    </div>
+
+    <div class="card" id="card-3" data-platform="booking" data-top="true" data-pool="shared" data-pet="false">
+      <div class="card-header">
+        <div class="card-num-row"><span class="card-num">№ 3</span><span class="platform-badge platform-booking">Booking</span></div>
+        <div class="card-name">Trilocale con piscina</div>
+        <div class="card-location">Nibbiaia, Wybrzeże Toskańskie</div>
+        <div class="card-price-row"><span class="card-price">3 753 PLN</span><span class="card-price-label">/ 9 nocy</span></div>
+      </div>
+      <div class="card-comment"><strong>Mój komentarz</strong>Lokalizacja blisko morza (w miarę). Standard średni i przeraża mnie ta część restauracyjna na zdjęciach. Ale lubię to miejsce. Jest w moim top.</div>
+      <div class="card-body">
+        <div><div class="card-section-title">Odległości</div><ul class="card-list"><li>Morze (Fortullino): 5–7 km</li><li>Livorno: ~22 km · Cecina: ~15 km</li><li>Restauracja Osteria dalle Bimbe: 150 m</li></ul></div>
+        <div><div class="card-section-title">Udogodnienia</div><ul class="card-list"><li>Basen sezonowy z widokiem na morze + brodzik</li><li>Restauracja na miejscu · bar · obsługa pokoju</li><li>Wi-Fi · parking · wypożyczalnia rowerów</li><li>Zakaz zwierząt</li></ul></div>
+        <div><div class="card-section-title">Informacje</div><ul class="card-list"><li>55 m² · 2 sypialnie · 2 łóżka podwójne</li><li>Bezpłatna anulacja przed 24.08</li></ul></div>
+        <div><span class="card-rating"><span class="rating-score">9,0</span><span class="rating-label">Znakomity</span><span class="rating-count">11 opinii</span></span></div>
+      </div>
+      <div class="card-footer">
+        <span class="top-tag">★ Moja topka</span>
+        <a class="card-link" href="https://www.booking.com/hotel/it/trilocale-con-piscina-nibbiaia.pl.html?label=kWjPkLpEERQJ&sid=cc6d38ecc417480165c0285062463aa6&aid=7944856" target="_blank">Otwórz Booking <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+      </div>
+    </div>
+
+    <div class="card" id="card-4" data-platform="booking" data-top="false" data-pool="priv" data-pet="false">
+      <div class="card-header">
+        <div class="card-num-row"><span class="card-num">№ 4</span><span class="platform-badge platform-booking">Booking</span></div>
+        <div class="card-name">Casa il Borgo Toscano</div>
+        <div class="card-location">San Vivaldo, k. San Gimignano</div>
+        <div class="card-price-row"><span class="card-price">3 489 PLN</span><span class="card-price-label">/ 9 nocy · wino w cenie</span></div>
+      </div>
+      <div class="card-comment"><strong>Mój komentarz</strong>Tutaj duże lokum. Podoba mi się jasny klimat. Lokalizacja wydaje się ok.</div>
+      <div class="card-body">
+        <div><div class="card-section-title">Odległości</div><ul class="card-list"><li>Morze (Livorno): ~55 km</li><li>San Gimignano: 14 km · Certaldo: 18 km</li><li>Restauracja Osteria San Vivaldo: 3,7 km</li><li>Restauracja Il Focolare: 3,8 km</li></ul></div>
+        <div><div class="card-section-title">Udogodnienia</div><ul class="card-list"><li>Prywatny basen całoroczny · patio · ogród</li><li>Wi-Fi · parking · zmywarka · pralka</li><li>Butelka wina powitalna · zakaz zwierząt</li></ul></div>
+        <div><div class="card-section-title">Informacje</div><ul class="card-list"><li>60 m² · 1 sypialnia + łóżko piętrowe</li><li>Bezpłatna anulacja przed 6.09</li></ul></div>
+        <div><span class="card-rating"><span class="rating-score">8,5</span><span class="rating-label">Bardzo dobry</span><span class="rating-count">8 opinii</span></span></div>
+      </div>
+      <div class="card-footer">
+        <span></span>
+        <a class="card-link" href="https://www.booking.com/hotel/it/casa-il-borgo-toscano.pl.html?label=kWjPkLpEERQJ&sid=cc6d38ecc417480165c0285062463aa6&aid=7944856" target="_blank">Otwórz Booking <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+      </div>
+    </div>
+
+    <div class="card" id="card-5" data-platform="booking" data-top="false" data-pool="shared" data-pet="true">
+      <div class="card-header">
+        <div class="card-num-row"><span class="card-num">№ 5</span><span class="platform-badge platform-booking">Booking</span></div>
+        <div class="card-name">Chianti Suite</div>
+        <div class="card-location">Castellina in Chianti</div>
+        <div class="card-price-row"><span class="card-price">3 894 PLN</span><span class="card-price-label">/ 9 nocy</span></div>
+      </div>
+      <div class="card-comment"><strong>Mój komentarz</strong>Ciężko mi to określić — wydaje mi się najgorsze z zestawienia. Dodałem bo spełnia moje warunki, ale nie jestem przekonany.</div>
+      <div class="card-body">
+        <div><div class="card-section-title">Odległości</div><ul class="card-list"><li>Morze (Livorno): ~80 km</li><li>Siena: 20 km · Florencja: 50 km</li><li>Restauracja La Casina di Lilliano: 200 m</li></ul></div>
+        <div><div class="card-section-title">Udogodnienia</div><ul class="card-list"><li>Basen infinity ze słoną wodą (sezonowy)</li><li>Parking · taras · zwierzęta akceptowane</li></ul></div>
+        <div><div class="card-section-title">Informacje</div><ul class="card-list"><li>60 m² · 2 sypialnie + sofa · taras</li><li>Obiekt zwykle niedostępny na Booking</li></ul></div>
+        <div><span class="card-rating rating-warn"><span class="rating-score">7,3</span><span class="rating-label">Dobry</span><span class="rating-count">35 opinii</span></span></div>
+      </div>
+      <div class="card-footer">
+        <span></span>
+        <a class="card-link" href="https://www.booking.com/hotel/it/suite-nel-chianti.pl.html?label=kWjPkLpEERQJ&sid=cc6d38ecc417480165c0285062463aa6&aid=7944856" target="_blank">Otwórz Booking <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+      </div>
+    </div>
+
+    <div class="card" id="card-6" data-platform="booking" data-top="false" data-pool="priv" data-pet="true">
+      <div class="card-header">
+        <div class="card-num-row"><span class="card-num">№ 6</span><span class="platform-badge platform-booking">Booking</span></div>
+        <div class="card-name">Villa Speranza</div>
+        <div class="card-location">Volterra, Loc. Ulignano</div>
+        <div class="card-price-row"><span class="card-price">3 011 PLN</span><span class="card-price-label">/ 9 nocy · bezzwrotna</span></div>
+      </div>
+      <div class="card-comment"><strong>Mój komentarz</strong>Mega zajebisty klimat. Lokalizacja średnia — trochę pośrodku niczego. Gigantyczna chata i chyba nie ma tam dodatkowych budynków.</div>
+      <div class="card-body">
+        <div><div class="card-section-title">Odległości</div><ul class="card-list"><li>Morze (Cecina): ~40 km</li><li>Volterra: 5 km</li><li>Restauracja Borgo della Speranza: 450 m</li></ul></div>
+        <div><div class="card-section-title">Udogodnienia</div><ul class="card-list"><li>Prywatny basen + brodzik + basen na dachu</li><li>Wi-Fi · parking · minibar · zwierzęta bezpłatnie</li></ul></div>
+        <div><div class="card-section-title">Informacje</div><ul class="card-list"><li>120 m² · 4 sypialnie · 5 łóżek</li><li>Brak opinii (nowy obiekt) · oferta bezzwrotna</li></ul></div>
+        <div><span class="card-rating rating-warn"><span class="rating-score">—</span><span class="rating-label">Brak opinii</span></span></div>
+      </div>
+      <div class="card-footer">
+        <span></span>
+        <a class="card-link" href="https://www.booking.com/hotel/it/villa-speranza-volterra.pl.html?label=kWjPkLpEERQJ&sid=cc6d38ecc417480165c0285062463aa6&aid=7944856" target="_blank">Otwórz Booking <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+      </div>
+    </div>
+
+    <div class="card" id="card-7" data-platform="booking" data-top="false" data-pool="priv" data-pet="true">
+      <div class="card-header">
+        <div class="card-num-row"><span class="card-num">№ 7</span><span class="platform-badge platform-booking">Booking</span></div>
+        <div class="card-name">Veduta di Castelvecchio</div>
+        <div class="card-location">Capannori, k. Lukki</div>
+        <div class="card-price-row"><span class="card-price">4 159 PLN</span><span class="card-price-label">/ 9 nocy · rabat –20%</span></div>
+      </div>
+      <div class="card-comment"><strong>Mój komentarz</strong>Podoba mi się bo dyskretny, mały, wydaje się prywatny. Nic szalonego ale też nie jest tak jak czasami chyba wielkim zespołem budynków. Lokalizacja spoko.</div>
+      <div class="card-body">
+        <div><div class="card-section-title">Odległości</div><ul class="card-list"><li>Morze (Viareggio): ~30 km</li><li>Lukka: 13 km · Krzywa Wieża: 27 km</li><li>Restauracja La Cicala e la Formica: 350 m</li></ul></div>
+        <div><div class="card-section-title">Udogodnienia</div><ul class="card-list"><li>Prywatny basen podgrzewany + jacuzzi</li><li>Wi-Fi · klimatyzacja · pralka · zwierzęta bezpłatnie</li><li>Dźwiękoszczelność · zmywarka</li></ul></div>
+        <div><div class="card-section-title">Informacje</div><ul class="card-list"><li>66 m² · 1 sypialnia + sofa · patio</li><li>Brak opinii (nowy) · rezerwacja manualna (24h)</li></ul></div>
+        <div><span class="card-rating rating-warn"><span class="rating-score">—</span><span class="rating-label">Brak opinii</span></span></div>
+      </div>
+      <div class="card-footer">
+        <span></span>
+        <a class="card-link" href="https://www.booking.com/hotel/it/veduta-di-castelvecchio-capannori-lucca.pl.html?label=kWjPkLpEERQJ&sid=cc6d38ecc417480165c0285062463aa6&aid=7944856" target="_blank">Otwórz Booking <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+      </div>
+    </div>
+
+  </div><div class="section-divider" id="sec-airbnb">
+    <div class="section-divider-line"></div>
+    <span class="section-divider-badge badge-airbnb">Airbnb · 5 obiektów · propozycje żony</span>
+    <div class="section-divider-line"></div>
+  </div>
+
+  <div style="margin-bottom:20px; padding:12px 16px; background:#fff3f5; border-left:3px solid var(--airbnb); border-radius:6px; font-size:13px; color:#333; font-style:italic;">
+    <strong style="font-style:normal;color:var(--airbnb);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;display:block;margin-bottom:3px;">Twoja ogólna ocena</strong>
+    Wybrałaś chyba lepsze.
+  </div>
+
+  <div class="cards" id="cards-airbnb">
+
+    <div class="card" id="card-8" data-platform="airbnb" data-top="false" data-pool="shared" data-pet="true">
+      <div class="card-header">
+        <div class="card-num-row"><span class="card-num">№ 8</span><span class="platform-badge platform-airbnb">Airbnb</span></div>
+        <div class="card-name">Bungalow Superior</div>
+        <div class="card-location">Montescudaio, Wybrzeże Etruskie</div>
+        <div class="card-price-row"><span class="card-price">2 807 PLN</span><span class="card-price-label">/ 9 nocy</span></div>
+      </div>
+      <div class="card-comment"><strong>Mój komentarz</strong>Nie podoba mi się klimat — letnisko + rodzinny. Chyba nie tego szukamy.</div>
+      <div class="card-body">
+        <div><div class="card-section-title">Odległości</div><ul class="card-list"><li>Morze (Cecina): ~5 km</li><li>Cecina: ~5 km · Volterra: ~35 km</li></ul></div>
+        <div><div class="card-section-title">Udogodnienia</div><ul class="card-list"><li>Basen na terenie kompleksu</li><li>Klimatyzacja · parking · zwierzęta dozwolone</li></ul></div>
+        <div><div class="card-section-title">Informacje</div><ul class="card-list"><li>2 sypialnie · 4 łóżka · maks. 5 gości</li><li>Klimat bardziej letniskowy niż prywatna willa</li></ul></div>
+        <div><span class="card-rating"><span class="rating-score">4,84</span><span class="rating-label">Superhost</span><span class="rating-count">141 opinii</span></span></div>
+      </div>
+      <div class="card-footer">
+        <span></span>
+        <a class="card-link" href="https://www.airbnb.pl/rooms/1669762901" target="_blank">Otwórz Airbnb <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+      </div>
+    </div>
+
+    <div class="card" id="card-9" data-platform="airbnb" data-top="true" data-pool="shared" data-pet="true">
+      <div class="card-header">
+        <div class="card-num-row"><span class="card-num">№ 9</span><span class="platform-badge platform-airbnb">Airbnb</span></div>
+        <div class="card-name">Romantyczne gniazdko w wieży</div>
+        <div class="card-location">Fauglia, Wzgórza Pizańskie</div>
+        <div class="card-price-row"><span class="card-price">3 593 PLN</span><span class="card-price-label">/ 9 nocy</span></div>
+      </div>
+      <div class="card-comment"><strong>Mój komentarz</strong>Absolutny sztos. Nic więcej nie mam do dodania. I lokalizacja dojebana. Czego chcieć więcej. Brałbym.</div>
+      <div class="card-body">
+        <div><div class="card-section-title">Odległości</div><ul class="card-list"><li>Morze (Livorno / Tirrenia): ~25 km</li><li>Piza: 30 km · Livorno: ~20 km</li><li>Fauglia centrum: ~3 km</li></ul></div>
+        <div><div class="card-section-title">Udogodnienia</div><ul class="card-list"><li>Basen wspólny na dachu (sezonowy)</li><li>Widok na winnicę i ogród</li><li>Wi-Fi · parking · pralka · zwierzęta dozwolone</li></ul></div>
+        <div><div class="card-section-title">Informacje</div><ul class="card-list"><li>42 m² · 1 sypialnia · 1 łóżko · maks. 2 gości</li><li>Rustykalny styl — terakota, wooden beams</li><li>Wybór gości Airbnb · bezpłatna anulacja przed 8.08</li></ul></div>
+        <div><span class="card-rating"><span class="rating-score">5,0</span><span class="rating-label">Wybór gości</span><span class="rating-count">7 opinii</span></span></div>
+      </div>
+      <div class="card-footer">
+        <span class="top-tag">★ Topka z Airbnb</span>
+        <a class="card-link" href="https://www.airbnb.pl/rooms/1314245701" target="_blank">Otwórz Airbnb <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+      </div>
+    </div>
+
+    <div class="card" id="card-10" data-platform="airbnb" data-top="false" data-pool="shared" data-pet="true">
+      <div class="card-header">
+        <div class="card-num-row"><span class="card-num">№ 10</span><span class="platform-badge platform-airbnb">Airbnb</span></div>
+        <div class="card-name">Monterufoli 5S</div>
+        <div class="card-location">Pomarance, k. Volterry</div>
+        <div class="card-price-row"><span class="card-price">2 382 PLN</span><span class="card-price-label">/ 9 nocy · najtańszy</span></div>
+      </div>
+      <div class="card-comment"><strong>Mój komentarz</strong>Robi wrażenie ale pewnie przez widok z drona.</div>
+      <div class="card-body">
+        <div><div class="card-section-title">Odległości</div><ul class="card-list"><li>Morze (Cecina): ~35 km</li><li>Volterra: 9 km · Pomarance: 9 km</li><li>Restauracja na miejscu: 5 m</li></ul></div>
+        <div><div class="card-section-title">Udogodnienia</div><ul class="card-list"><li>Basen wspólny · panoramiczne widoki</li><li>Wi-Fi · parking · zwierzęta dozwolone</li><li>350-hektarowa farma</li></ul></div>
+        <div><div class="card-section-title">Informacje</div><ul class="card-list"><li>1 sypialnia + 2 futony · maks. 4 gości</li></ul></div>
+        <div><span class="card-rating"><span class="rating-score">4,86</span><span class="rating-label">Bardzo dobry</span><span class="rating-count">7 opinii</span></span></div>
+      </div>
+      <div class="card-footer">
+        <span></span>
+        <a class="card-link" href="https://www.airbnb.pl/rooms/648364502" target="_blank">Otwórz Airbnb <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+      </div>
+    </div>
+
+    <div class="card" id="card-11" data-platform="airbnb" data-top="false" data-pool="shared" data-pet="false">
+      <div class="card-header">
+        <div class="card-num-row"><span class="card-num">№ 11</span><span class="platform-badge platform-airbnb">Airbnb</span></div>
+        <div class="card-name">Lavanda od Interhome</div>
+        <div class="card-location">Fucecchio, k. Florencji</div>
+        <div class="card-price-row"><span class="card-price">3 440 PLN</span><span class="card-price-label">/ 9 nocy</span></div>
+      </div>
+      <div class="card-comment"><strong>Mój komentarz</strong>Podoba mi się — trochę wygląda na zaniedbane, ale lokalizacja mega.</div>
+      <div class="card-body">
+        <div><div class="card-section-title">Odległości</div><ul class="card-list"><li>Morze (Viareggio / Piza): ~40 km</li><li>Florencja: ~40 km · San Miniato: ~15 km</li><li>Empoli: ~10 km · Siena: ~60 km</li></ul></div>
+        <div><div class="card-section-title">Udogodnienia</div><ul class="card-list"><li>Basen wspólny · klimatyzacja · pralka</li><li>Wi-Fi · ogród ogrodzony · meble tarasowe</li><li>Kuchnia pełna z piekarnikiem i indukcją</li></ul></div>
+        <div><div class="card-section-title">Informacje</div><ul class="card-list"><li>Studio · 1 łóżko + sofa · maks. 2 gości</li><li>Bezpłatna anulacja przed 8.08</li></ul></div>
+        <div><span class="card-rating"><span class="rating-score">4,84</span><span class="rating-label">Bardzo dobry</span><span class="rating-count">25 opinii</span></span></div>
+      </div>
+      <div class="card-footer">
+        <span></span>
+        <a class="card-link" href="https://www.airbnb.pl/rooms/1023811002" target="_blank">Otwórz Airbnb <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+      </div>
+    </div>
+
+    <div class="card" id="card-12" data-platform="airbnb" data-top="true" data-pool="priv" data-pet="true">
+      <div class="card-header">
+        <div class="card-num-row"><span class="card-num">№ 12</span><span class="platform-badge platform-airbnb">Airbnb</span></div>
+        <div class="card-name">Agroturystyka San Francesco</div>
+        <div class="card-location">Orciatico, k. Lajatico / Volterry</div>
+        <div class="card-price-row"><span class="card-price">3 855 PLN</span><span class="card-price-label">/ 9 nocy</span></div>
+      </div>
+      <div class="card-comment"><strong>Mój komentarz</strong>Fajne — moja topka (z propozycji żony).</div>
+      <div class="card-body">
+        <div><div class="card-section-title">Odległości</div><ul class="card-list"><li>Morze (Cecina / Livorno): ~35 km</li><li>Volterra: ~15 km · Lajatico: ~5 km</li><li>Piza: ~35 km · Lukka: ~40 km</li></ul></div>
+        <div><div class="card-section-title">Udogodnienia</div><ul class="card-list"><li>Basen + jacuzzi · taras z piecem do pizzy i grillem</li><li>Wi-Fi · parking · pralka · zwierzęta dozwolone</li><li>Espresso + kawa przelewowa · własne wino i oliwa</li></ul></div>
+        <div><div class="card-section-title">Informacje</div><ul class="card-list"><li>1 sypialnia · 1 łóżko + sofa · maks. 4 gości</li><li>Wybór gości · Superhost · 10 lat doświadczenia</li><li>Bezpłatna anulacja przed 8.08</li></ul></div>
+        <div><span class="card-rating"><span class="rating-score">5,0</span><span class="rating-label">Wybór gości · Superhost</span><span class="rating-count">22 opinie</span></span></div>
+      </div>
+      <div class="card-footer">
+        <span class="top-tag">★ Topka z Airbnb</span>
+        <a class="card-link" href="https://www.airbnb.pl/rooms/134299503" target="_blank">Otwórz Airbnb <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+      </div>
+    </div>
+
+  </div><div class="no-results" id="no-results">Żaden obiekt nie spełnia wybranych kryteriów.</div>
+
+</main>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+// Współrzędne geograficzne obiektów na mapie
+const locations = [
+  { id: 1, name: "1. Villa Santa Gabriella", lat: 42.9431, lng: 10.8712, plat: "booking", top: true },
+  { id: 2, name: "2. Borgo Amarrante", lat: 43.5539, lng: 10.9142, plat: "booking", top: false },
+  { id: 3, name: "3. Trilocale con piscina", lat: 43.4611, lng: 10.3662, plat: "booking", top: true },
+  { id: 4, name: "4. Casa il Borgo Toscano", lat: 43.5350, lng: 10.8550, plat: "booking", top: false },
+  { id: 5, name: "5. Chianti Suite", lat: 43.4812, lng: 11.2884, plat: "booking", top: false },
+  { id: 6, name: "6. Villa Speranza", lat: 43.4344, lng: 10.8841, plat: "booking", top: false },
+  { id: 7, name: "7. Veduta di Castelvecchio", lat: 43.8356, lng: 10.5735, plat: "booking", top: false },
+  { id: 8, name: "8. Bungalow Superior", lat: 43.3323, lng: 10.5161, plat: "airbnb", top: false },
+  { id: 9, name: "9. Romantyczne gniazdko w wieży", lat: 43.5714, lng: 10.5123, plat: "airbnb", top: true },
+  { id: 10, name: "10. Monterufoli 5S", lat: 43.2986, lng: 10.8739, plat: "airbnb", top: false },
+  { id: 11, name: "11. Lavanda od Interhome", lat: 43.7317, lng: 10.8064, plat: "airbnb", top: false },
+  { id: 12, name: "12. Agroturystyka San Francesco", lat: 43.4412, lng: 10.7410, plat: "airbnb", top: true }
+];
+
+// Inicjalizacja i punkt początkowy mapy
+const map = L.map('map').setView([43.45, 10.8], 9);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© OpenStreetMap contributors'
+}).addTo(map);
+
+const markers = [];
+
+// Generowanie niestandardowych pinezek na mapie
+locations.forEach(loc => {
+  let markerColor = loc.plat === 'booking' ? '#003580' : '#e0224d';
+  if (loc.top) markerColor = '#c4622d'; 
+
+  const customIcon = L.divIcon({
+    html: `<svg width="24" height="24" viewBox="0 0 24 24" fill="${markerColor}" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="8"/></svg>`,
+    className: 'custom-pin',
+    iconSize: [24, 24],
+    iconAnchor: [12, 12]
+  });
+
+  const marker = L.marker([loc.lat, loc.lng], { icon: customIcon }).addTo(map);
+  
+  marker.bindPopup(`
+    <div class="map-popup-title">${loc.name}</div>
+    <a href="#card-${loc.id}" style="color: #c4622d; text-decoration: none; font-size:12px; font-weight:600;">Pokaż szczegóły ↓</a>
+  `);
+
+  marker.locData = loc;
+  markers.push(marker);
+});
+
+// Zaktualizowana funkcja filtrowania (obsługuje karty oraz ukrywanie/pokazywanie pinezek)
+function filter(type, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  const cards = document.querySelectorAll('.card');
+  let visible = 0;
+  const visibleBounds = L.latLngBounds();
+
+  cards.forEach(c => {
+    const plat = c.dataset.platform;
+    const top  = c.dataset.top === 'true';
+    const pool = c.dataset.pool;
+    const pet  = c.dataset.pet === 'true';
+
+    let show = false;
+    if (type === 'all')       show = true;
+    else if (type === 'booking')   show = plat === 'booking';
+    else if (type === 'airbnb')    show = plat === 'airbnb';
+    else if (type === 'top')       show = top;
+    else if (type === 'pool-priv') show = pool === 'priv';
+    else if (type === 'pet')       show = pet;
+
+    c.style.display = show ? 'flex' : 'none';
+    if (show) visible++;
+  });
+
+  markers.forEach(m => {
+    let showMarker = false;
+    if (type === 'all')       showMarker = true;
+    else if (type === 'booking')   showMarker = m.locData.plat === 'booking';
+    else if (type === 'airbnb')    showMarker = m.locData.plat === 'airbnb';
+    else if (type === 'top')       showMarker = m.locData.top;
+    else if (type === 'pool-priv') {
+      const card = document.getElementById(`card-${m.locData.id}`);
+      showMarker = card.dataset.pool === 'priv';
+    }
+    else if (type === 'pet') {
+      const card = document.getElementById(`card-${m.locData.id}`);
+      showMarker = card.dataset.pet === 'true';
+    }
+
+    if (showMarker) {
+      m.addTo(map);
+      visibleBounds.extend(m.getLatLng());
+    } else {
+      map.removeLayer(m);
+    }
+  });
+
+  // Inteligentne przybliżanie widoku mapy do odfiltrowanych punktów
+  if (visible > 0 && type !== 'all') {
+    map.fitBounds(visibleBounds, { padding: [40, 40] });
+  } else if (type === 'all') {
+    map.setView([43.45, 10.8], 9);
+  }
+
+  // Zarządzanie liniami podziału sekcji
+  const bookingVisible = [...document.querySelectorAll('.card[data-platform="booking"]')].some(c => c.style.display !== 'none');
+  const airbnbVisible  = [...document.querySelectorAll('.card[data-platform="airbnb"]')].some(c => c.style.display !== 'none');
+  document.getElementById('sec-booking').style.display = bookingVisible ? '' : 'none';
+  document.getElementById('sec-airbnb').style.display  = airbnbVisible  ? '' : 'none';
+
+  document.getElementById('no-results').style.display = visible === 0 ? 'block' : 'none';
+}
+</script>
+</body>
+</html>
