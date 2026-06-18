@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Toskania 2026 · Noclegi</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
-
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -415,10 +415,14 @@ footer {
     <button class="filter-btn" onclick="filter('pet',this)">Zwierzęta OK</button>
     <button class="filter-btn filter-btn-fav" onclick="filter('favs',this)">❤ Ulubione (<span id="fav-count">0</span>)</button>
   </div>
-  <span class="section-divider-badge badge-booking">Booking.com</span>
+
+  <!-- BOOKING -->
+  <div class="section-divider" id="sec-booking">
+    <div class="section-divider-line"></div>
+    <span class="section-divider-badge badge-booking">Booking.com</span>
     <div class="section-divider-line"></div>
   </div>
-  <div class="cards" id="cards-all">
+  <div class="cards" id="cards-booking">
     
     <div class="card" id="card-2" data-platform="booking" data-top="false" data-pool="shared" data-pet="true" >
       <button class="heart-btn" onclick="toggleLike(2,this)" title="Dodaj do ulubionych">♥</button>
@@ -491,7 +495,16 @@ footer {
         </div>
       <div class="card-footer"><span></span><a class="card-link" href="https://www.booking.com/hotel/it/veduta-di-castelvecchio-capannori-lucca.pl.html?label=kWjPkLpEERQJ&sid=cc6d38ecc417480165c0285062463aa6&aid=7944856" target="_blank">Otwórz Booking <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div>
     </div>
-  
+  </div>
+
+  <!-- AIRBNB -->
+  <div class="section-divider" id="sec-airbnb">
+    <div class="section-divider-line"></div>
+    <span class="section-divider-badge badge-airbnb">Airbnb · propozycje żony</span>
+    <div class="section-divider-line"></div>
+  </div>
+  <div class="airbnb-note"><strong>Twoja ogólna ocena</strong>Wybrałaś chyba lepsze.</div>
+  <div class="cards" id="cards-airbnb">
     
     <div class="card" id="card-9" data-platform="airbnb" data-top="true" data-pool="shared" data-pet="true" >
       <button class="heart-btn" onclick="toggleLike(9,this)" title="Dodaj do ulubionych">♥</button>
@@ -871,11 +884,10 @@ footer {
 </footer>
 
 <script>
-// ── SLIDER ──────────────────────────────────────────────────────────────
+// ── SLIDER
 let currentSlide = 0;
 const SLIDE_COUNT = 5;
 let sliderTimer;
-
 function goToSlide(n) {
   const slides = document.querySelectorAll('.slide');
   const dots   = document.querySelectorAll('.slider-dot');
@@ -889,75 +901,87 @@ function nextSlide() { clearInterval(sliderTimer); goToSlide(currentSlide + 1); 
 function prevSlide() { clearInterval(sliderTimer); goToSlide(currentSlide - 1); startSlider(); }
 function startSlider() { sliderTimer = setInterval(() => goToSlide(currentSlide + 1), 5000); }
 
-// ── MAP ──────────────────────────────────────────────────────────────────
-const locations = [
-  { id:1, name:"1. Villa Santa Gabriella", lat:42.949, lng:10.885, plat:"booking", top:true },
-  { id:2, name:"2. Borgo Amarrante", lat:43.555, lng:10.899, plat:"booking", top:false },
-  { id:3, name:"3. Trilocale con piscina", lat:43.464, lng:10.417, plat:"booking", top:true },
-  { id:4, name:"4. Casa il Borgo Toscano", lat:43.524, lng:10.898, plat:"booking", top:false },
-  { id:5, name:"5. Chianti Suite", lat:43.471, lng:11.285, plat:"booking", top:false },
-  { id:6, name:"6. Villa Speranza", lat:43.425, lng:10.92, plat:"booking", top:false },
-  { id:7, name:"7. Veduta di Castelvecchio", lat:43.846, lng:10.574, plat:"booking", top:false },
-  { id:8, name:"8. Bungalow Superior", lat:43.326, lng:10.626, plat:"airbnb", top:false },
-  { id:9, name:"9. Gniazdko w wieży", lat:43.571, lng:10.512, plat:"airbnb", top:true },
-  { id:10, name:"10. Monterufoli 5S", lat:43.299, lng:10.874, plat:"airbnb", top:false },
-  { id:11, name:"11. Lavanda od Interhome", lat:43.727, lng:10.808, plat:"airbnb", top:false },
-  { id:12, name:"12. San Francesco", lat:43.441, lng:10.741, plat:"airbnb", top:true }
-];
+// ── MAP LOCATIONS
+const locations = [{id:1,name:"1. Villa Santa Gabriella",lat:42.949,lng:10.885,plat:"booking",top:true},
+  {id:2,name:"2. Borgo Amarrante",lat:43.555,lng:10.899,plat:"booking",top:false},
+  {id:3,name:"3. Trilocale con piscina",lat:43.464,lng:10.417,plat:"booking",top:true},
+  {id:4,name:"4. Casa il Borgo Toscano",lat:43.524,lng:10.898,plat:"booking",top:false},
+  {id:5,name:"5. Chianti Suite",lat:43.471,lng:11.285,plat:"booking",top:false},
+  {id:6,name:"6. Villa Speranza",lat:43.425,lng:10.920,plat:"booking",top:false},
+  {id:7,name:"7. Veduta di Castelvecchio",lat:43.846,lng:10.574,plat:"booking",top:false},
+  {id:8,name:"8. Bungalow Superior",lat:43.326,lng:10.626,plat:"airbnb",top:false},
+  {id:9,name:"9. Gniazdko w wiezy",lat:43.571,lng:10.512,plat:"airbnb",top:true},
+  {id:10,name:"10. Monterufoli 5S",lat:43.299,lng:10.874,plat:"airbnb",top:false},
+  {id:11,name:"11. Lavanda od Interhome",lat:43.727,lng:10.808,plat:"airbnb",top:false},
+  {id:12,name:"12. San Francesco",lat:43.441,lng:10.741,plat:"airbnb",top:true}];
 
-// ── FILTER ───────────────────────────────────────────────────────────────
+// ── MAP INIT (called by Leaflet onload)
+function initLeafletMap() {
+  const map = L.map('map').setView([43.5, 10.75], 8);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors', maxZoom: 18
+  }).addTo(map);
+  const markers = [];
+  locations.forEach(loc => {
+    const color = loc.top ? '#b85c2a' : (loc.plat === 'booking' ? '#003580' : '#c13b5e');
+    const icon = L.divIcon({
+      html: `<div style="background:${color};color:#fff;border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;border:2px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,0.3)">${loc.id}</div>`,
+      className:'', iconSize:[30,30], iconAnchor:[15,15]
+    });
+    const m = L.marker([loc.lat, loc.lng], {icon}).addTo(map);
+    m.bindPopup(`<b>${loc.name}</b><br><a href="#card-${loc.id}" style="color:#b85c2a">Pokaz ↓</a>`);
+    m.locData = loc;
+    markers.push(m);
+  });
+  markers.forEach(m => {
+    const card = document.getElementById('card-' + m.locData.id);
+    if (card && card.dataset.rejected === 'true') map.removeLayer(m);
+  });
+  window.map = map;
+  window.markers = markers;
+}
+
+// ── FILTER
 function filter(type, btn) {
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-
-  // localLikes comes from JS_logic — safe to use here since it's global const
   const likes = (typeof localLikes !== 'undefined') ? localLikes : [];
-
   const cards = document.querySelectorAll('.card');
   let visible = 0;
   const visibleLatLngs = [];
-
   cards.forEach(c => {
-    const id   = parseInt(c.id.replace('card-', ''));
-    const plat = c.dataset.platform;
-    const top  = c.dataset.top === 'true';
-    const pool = c.dataset.pool;
-    const pet  = c.dataset.pet === 'true';
-    const rej  = c.dataset.rejected === 'true';
-
-    let show = false;
-    if      (type === 'all')       show = !rej;
-    else if (type === 'rejected')  show = rej;
-    else if (type === 'booking')   show = plat === 'booking' && !rej;
-    else if (type === 'airbnb')    show = plat === 'airbnb' && !rej;
-    else if (type === 'top')       show = top && !rej;
-    else if (type === 'pool-priv') show = pool === 'priv' && !rej;
-    else if (type === 'pet')       show = pet && !rej;
-    else if (type === 'favs')      show = likes.includes(id);
-
-    c.style.display = show ? 'flex' : 'none';
-    if (show) visible++;
+    const id=parseInt(c.id.replace('card-',''));
+    const plat=c.dataset.platform, top=c.dataset.top==='true';
+    const pool=c.dataset.pool, pet=c.dataset.pet==='true', rej=c.dataset.rejected==='true';
+    let show=false;
+    if      (type==='all')       show=!rej;
+    else if (type==='rejected')  show=rej;
+    else if (type==='booking')   show=plat==='booking'&&!rej;
+    else if (type==='airbnb')    show=plat==='airbnb'&&!rej;
+    else if (type==='top')       show=top&&!rej;
+    else if (type==='pool-priv') show=pool==='priv'&&!rej;
+    else if (type==='pet')       show=pet&&!rej;
+    else if (type==='favs')      show=likes.includes(id);
+    c.style.display=show?'flex':'none';
+    if(show) visible++;
   });
-
-  // Update map markers
   if (window.map && window.markers) {
     window.markers.forEach(m => {
-      const card = document.getElementById('card-' + m.locData.id);
-      const show = card && card.style.display !== 'none';
-      if (show) { m.addTo(window.map); visibleLatLngs.push(m.getLatLng()); }
+      const card=document.getElementById('card-'+m.locData.id);
+      const show=card&&card.style.display!=='none';
+      if(show){m.addTo(window.map);visibleLatLngs.push(m.getLatLng());}
       else window.map.removeLayer(m);
     });
-    if (visibleLatLngs.length > 1) window.map.fitBounds(L.latLngBounds(visibleLatLngs), { padding: [40,40] });
-    else if (visibleLatLngs.length === 1) window.map.setView(visibleLatLngs[0], 11);
-    else window.map.setView([43.5, 10.75], 8);
+    if(visibleLatLngs.length>1) window.map.fitBounds(L.latLngBounds(visibleLatLngs),{padding:[40,40]});
+    else if(visibleLatLngs.length===1) window.map.setView(visibleLatLngs[0],11);
+    else window.map.setView([43.5,10.75],8);
   }
-
-  // Show/hide rejected section header
-  const rV = [...document.querySelectorAll('.card[data-rejected="true"]')].some(c => c.style.display !== 'none');
-  document.getElementById('sec-rejected').style.display = rV ? '' : 'none';
-  document.getElementById('no-results').style.display   = visible === 0 ? 'block' : 'none';
+  const rV=[...document.querySelectorAll('.card[data-rejected="true"]')].some(c=>c.style.display!=='none');
+  document.getElementById('sec-rejected').style.display=rV?'':'none';
+  document.getElementById('no-results').style.display=visible===0?'block':'none';
 }
 
+// ── SUPABASE / STARS / COMMENTS / LIKES
 
 // ─── SUPABASE CONFIG ───────────────────────────────────────────────────
 const SUPABASE_URL = 'https://ldqtdbqqympoprrrefub.supabase.co';
@@ -1162,148 +1186,19 @@ function updateFavCount() {
     const id = parseInt(btn.closest('.card').id.replace('card-', ''));
     btn.classList.toggle('liked', localLikes.includes(id));
   });
-  // If "Ulubione" filter is active, refresh the view
-  const favBtn = document.querySelector('.filter-btn-fav.active');
-  if (favBtn) filter('favs', favBtn);
 }
 
 // ─── MAP ───────────────────────────────────────────────────────────────
+
+// ── INIT
 document.addEventListener('DOMContentLoaded', function() {
-const locations = [
-  { id:1,  name:"1. Villa Santa Gabriella",        lat:42.949, lng:10.885, plat:"booking", top:true  },
-  { id:2,  name:"2. Borgo Amarrante",               lat:43.555, lng:10.899, plat:"booking", top:false },
-  { id:3,  name:"3. Trilocale con piscina",         lat:43.464, lng:10.417, plat:"booking", top:true  },
-  { id:4,  name:"4. Casa il Borgo Toscano",         lat:43.524, lng:10.898, plat:"booking", top:false },
-  { id:5,  name:"5. Chianti Suite",                 lat:43.471, lng:11.285, plat:"booking", top:false },
-  { id:6,  name:"6. Villa Speranza",                lat:43.425, lng:10.920, plat:"booking", top:false },
-  { id:7,  name:"7. Veduta di Castelvecchio",       lat:43.846, lng:10.574, plat:"booking", top:false },
-  { id:8,  name:"8. Bungalow Superior",             lat:43.326, lng:10.626, plat:"airbnb",  top:false },
-  { id:9,  name:"9. Romantyczne gniazdko w wieży",  lat:43.571, lng:10.512, plat:"airbnb",  top:true  },
-  { id:10, name:"10. Monterufoli 5S",               lat:43.299, lng:10.874, plat:"airbnb",  top:false },
-  { id:11, name:"11. Lavanda od Interhome",         lat:43.727, lng:10.808, plat:"airbnb",  top:false },
-  { id:12, name:"12. Agroturystyka San Francesco",  lat:43.441, lng:10.741, plat:"airbnb",  top:true  },
-];
-
-const map = L.map('map').setView([43.5, 10.75], 8);
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '© OpenStreetMap contributors', maxZoom: 18
-}).addTo(map);
-
-const markers = [];
-locations.forEach(loc => {
-  const color = loc.top ? '#c4622d' : (loc.plat === 'booking' ? '#003580' : '#e0224d');
-  const icon = L.divIcon({
-    html: `<div style="background:${color};color:#fff;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,0.3)">${loc.id}</div>`,
-    className: '', iconSize: [28, 28], iconAnchor: [14, 14]
-  });
-  const m = L.marker([loc.lat, loc.lng], { icon }).addTo(map);
-  m.bindPopup(`<div class="map-popup-title">${loc.name}</div><a href="#card-${loc.id}" style="color:var(--terra);font-size:12px;font-weight:600;text-decoration:none">Pokaż kartę ↓</a>`);
-  m.locData = loc;
-  markers.push(m);
-});
-
-// ─── FILTER ────────────────────────────────────────────────────────────
-function filter(type, btn) {
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-
-  const cards = document.querySelectorAll('.card');
-  let visible = 0;
-  const visibleLatLngs = [];
-
-  cards.forEach(c => {
-    const id   = parseInt(c.id.replace('card-', ''));
-    const plat = c.dataset.platform;
-    const top  = c.dataset.top === 'true';
-    const pool = c.dataset.pool;
-    const pet  = c.dataset.pet === 'true';
-
-    let show = false;
-    if      (type === 'all')       show = true;
-    else if (type === 'booking')   show = plat === 'booking';
-    else if (type === 'airbnb')    show = plat === 'airbnb';
-    else if (type === 'top')       show = top;
-    else if (type === 'pool-priv') show = pool === 'priv';
-    else if (type === 'pet')       show = pet;
-    else if (type === 'favs')      show = localLikes.includes(id);
-    else if (type === 'rejected')  show = c.dataset.rejected === 'true';
-
-    // ukryj odrzucone we wszystkich filtrach poza 'rejected'
-    if (type !== 'rejected' && c.dataset.rejected === 'true') show = false;
-
-    c.style.display = show ? 'flex' : 'none';
-    if (show) visible++;
-  });
-
-  markers.forEach(m => {
-    const id   = m.locData.id;
-    const card = document.getElementById(`card-${id}`);
-    const show = card && card.style.display !== 'none';
-    if (show) { m.addTo(map); visibleLatLngs.push(m.getLatLng()); }
-    else map.removeLayer(m);
-  });
-
-  if (visibleLatLngs.length > 1) map.fitBounds(L.latLngBounds(visibleLatLngs), { padding: [40, 40] });
-  else if (visibleLatLngs.length === 1) map.setView(visibleLatLngs[0], 11);
-  else map.setView([43.5, 10.75], 8);
-
-  const bV = [...document.querySelectorAll('.card[data-platform="booking"]')].some(c => c.style.display !== 'none');
-  const aV = [...document.querySelectorAll('.card[data-platform="airbnb"]')].some(c => c.style.display !== 'none');
-  
-  document.getElementById('no-results').style.display  = visible === 0 ? 'block' : 'none';
-}
-
-// ─── HELPERS ───────────────────────────────────────────────────────────
-
-
-// ─── INIT ──────────────────────────────────────────────────────────────
-document.getElementById('setup-banner').style.display = 'none';
-
-// Ukryj odrzucone karty domyślnie (tylko 2,7,9,10,12 widoczne)
-document.querySelectorAll('.card[data-rejected="true"]').forEach(c => {
-  c.style.display = 'none';
-});
-
-// Ukryj sekcje jeśli wszystkie karty w nich odrzucone
-const bVinit = [...document.querySelectorAll('.card[data-platform="booking"]')].some(c => c.style.display !== 'none');
-const aVinit = [...document.querySelectorAll('.card[data-platform="airbnb"]')].some(c => c.style.display !== 'none');
-document.getElementById('sec-booking').style.display = bVinit ? '' : 'none';
-document.getElementById('sec-airbnb').style.display  = aVinit ? '' : 'none';
-
-// Ukryj markery odrzuconych kart na mapie
-markers.forEach(m => {
-  const card = document.getElementById('card-' + m.locData.id);
-  if (card && card.dataset.rejected === 'true') map.removeLayer(m);
-});
-
-updateFavCount();
-loadAllData();
-}); // end DOMContentLoaded
-
-
-// ── INIT ─────────────────────────────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', function() {
-  // Slider
   document.querySelector('.slide').classList.add('active');
   startSlider();
-
-  // Hide rejected cards on init
-  document.querySelectorAll('.card[data-rejected="true"]').forEach(c => { c.style.display = 'none'; });
-
-
-  // Hide rejected section
-  document.getElementById('sec-rejected').style.display = 'none';
-
-  // Init community
-  document.getElementById('setup-banner') && (document.getElementById('setup-banner').style.display = 'none');
+  document.querySelectorAll('.card[data-rejected="true"]').forEach(c=>{c.style.display='none';});
+  document.getElementById('sec-rejected').style.display='none';
   updateFavCount();
   loadAllData();
 });
-</script>
-<script>
-function initLeafletMap() {
-  if (typeof L === 'undefined') { setTimeout(initLeafletMap, 50); return; }
-}
 </script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" onload="initLeafletMap()"></script>
 </body>
