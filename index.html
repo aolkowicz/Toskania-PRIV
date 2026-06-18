@@ -122,15 +122,7 @@ body { font-family: 'Inter', sans-serif; background: var(--cream); color: var(--
 .slider-arrow.prev { left: 24px; }
 .slider-arrow.next { right: 24px; }
 
-/* ── TOPKI BANNER ── */
-.topki-banner {
-  background: var(--italian-green);
-  padding: 12px 48px;
-  display: flex; gap: 24px; flex-wrap: wrap; align-items: center;
-}
-.topki-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.6); }
-.topki-item { font-size: 13px; font-weight: 500; color: #fff; }
-.topki-item span { opacity: 0.65; }
+
 
 /* ── MAP ── */
 .map-wrap { max-width: 1200px; margin: 48px auto 0; padding: 0 32px; }
@@ -389,7 +381,6 @@ footer {
 @media (max-width: 640px) {
   .hero-content { padding: 0 24px 60px; }
   .map-wrap, main { padding-left: 16px; padding-right: 16px; }
-  .topki-banner { padding: 12px 24px; }
   .slider-dots { right: 24px; }
   .cards { grid-template-columns: 1fr; }
 }
@@ -644,12 +635,6 @@ footer {
 </div>
 
 <!-- TOPKI BANNER -->
-<div style="height:4px;background:linear-gradient(to right, #4a7c59 33.3%, #f8f9f6 33.3% 66.6%, #b85c6e 66.6%)"></div>
-<div class="topki-banner">
-  <span class="topki-label">Topki</span>
-  <span class="topki-item">★ Booking: <span>2. Borgo Amarrante · 7. Veduta di Castelvecchio</span></span>
-  <span class="topki-item">★ Airbnb: <span>9. Gniazdko w wieży · 12. San Francesco</span></span>
-</div>
 
 <!-- MAP -->
 <nav class="tabs-nav">
@@ -671,21 +656,9 @@ footer {
     <span class="filter-label">Pokaż:</span>
     <button class="filter-btn active" onclick="filter('all',this)">Wybrane (5)</button>
     <button class="filter-btn" onclick="filter('rejected',this)" style="color:var(--muted);border-style:dashed;">Odrzucone (7)</button>
-    <button class="filter-btn" onclick="filter('booking',this)">Booking (2)</button>
-    <button class="filter-btn" onclick="filter('airbnb',this)">Airbnb (3)</button>
-    <button class="filter-btn" onclick="filter('top',this)">★ Topki</button>
-    <button class="filter-btn" onclick="filter('pool-priv',this)">Prywatny basen</button>
-    <button class="filter-btn" onclick="filter('pet',this)">Zwierzęta OK</button>
     <button class="filter-btn filter-btn-fav" onclick="filter('favs',this)">❤ Ulubione (<span id="fav-count">0</span>)</button>
   </div>
-
-  <!-- BOOKING -->
-  <div class="section-divider" id="sec-booking">
-    <div class="section-divider-line"></div>
-    <span class="section-divider-badge badge-booking">Booking.com</span>
-    <div class="section-divider-line"></div>
-  </div>
-  <div class="cards" id="cards-booking">
+  <div class="cards" id="cards-all">
     
     <div class="card" id="card-2" data-platform="booking" data-top="false" data-pool="shared" data-pet="true" >
       <button class="heart-btn" onclick="toggleLike(2,this)" title="Dodaj do ulubionych">♥</button>
@@ -786,16 +759,7 @@ footer {
         </div>
       <div class="card-footer"><span></span><a class="card-link" href="https://www.booking.com/hotel/it/veduta-di-castelvecchio-capannori-lucca.pl.html?label=kWjPkLpEERQJ&sid=cc6d38ecc417480165c0285062463aa6&aid=7944856" target="_blank">Otwórz Booking <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div>
     </div>
-  </div>
-
-  <!-- AIRBNB -->
-  <div class="section-divider" id="sec-airbnb">
-    <div class="section-divider-line"></div>
-    <span class="section-divider-badge badge-airbnb">Airbnb · propozycje żony</span>
-    <div class="section-divider-line"></div>
-  </div>
-  <div class="airbnb-note"><strong>Twoja ogólna ocena</strong>Wybrałaś chyba lepsze.</div>
-  <div class="cards" id="cards-airbnb">
+  
     
     <div class="card" id="card-9" data-platform="airbnb" data-top="true" data-pool="shared" data-pet="true" >
       <button class="heart-btn" onclick="toggleLike(9,this)" title="Dodaj do ulubionych">♥</button>
@@ -946,7 +910,6 @@ footer {
         </div>
       <div class="card-footer"><span class="top-tag">★ Topka</span><a class="card-link" href="https://www.airbnb.pl/rooms/22139450" target="_blank">Otwórz Airbnb <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div>
     </div>
-  </div>
 
   <!-- REJECTED (hidden) -->
   <div class="section-divider" id="sec-rejected" style="display:none">
