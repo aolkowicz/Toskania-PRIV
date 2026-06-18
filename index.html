@@ -384,6 +384,221 @@ footer {
   .slider-dots { right: 24px; }
   .cards { grid-template-columns: 1fr; }
 }
+
+/* ── TABS ── */
+.tabs-nav {
+  background: var(--ink);
+  display: flex;
+  padding: 0 48px;
+  gap: 4px;
+  border-bottom: 3px solid transparent;
+  border-image: linear-gradient(to right, #4a7c59 33.33%, #f8f9f6 33.33% 66.66%, #b85c6e 66.66%) 1;
+}
+.tab-btn {
+  padding: 14px 24px;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.5);
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.2s;
+}
+.tab-btn:hover { color: rgba(255,255,255,0.8); }
+.tab-btn.active { color: #fff; }
+.tab-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -3px; left: 0; right: 0;
+  height: 3px;
+  background: var(--italian-green);
+}
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* ── TASKS ── */
+.tasks-wrap {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 48px 32px 100px;
+}
+.tasks-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 32px;
+}
+.tasks-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 36px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.tasks-subtitle {
+  font-size: 13px;
+  color: var(--muted);
+}
+.task-add-form {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px 24px;
+  margin-bottom: 32px;
+  box-shadow: var(--shadow);
+  border-top: 3px solid var(--italian-green);
+}
+.task-add-title {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+.task-add-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.task-input {
+  flex: 1;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--cream);
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.15s;
+}
+.task-input:focus { border-color: var(--italian-green); background: #fff; }
+.task-author-input {
+  width: 160px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--cream);
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.15s;
+}
+.task-author-input:focus { border-color: var(--italian-green); background: #fff; }
+.task-submit {
+  padding: 10px 24px;
+  background: var(--italian-green);
+  color: #fff;
+  border: none;
+  border-radius: 24px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+.task-submit:hover { background: var(--terra-dark); }
+.task-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.task-item {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.2s;
+}
+.task-item:hover { box-shadow: var(--shadow-lg); }
+.task-item.done { opacity: 0.55; }
+.task-item.done .task-text { text-decoration: line-through; color: var(--muted); }
+.task-checkbox {
+  width: 22px; height: 22px;
+  border: 2px solid var(--border);
+  border-radius: 6px;
+  flex-shrink: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  margin-top: 1px;
+  background: #fff;
+}
+.task-checkbox:hover { border-color: var(--italian-green); }
+.task-checkbox.checked {
+  background: var(--italian-green);
+  border-color: var(--italian-green);
+  color: #fff;
+}
+.task-checkbox.checked::after { content: '✓'; font-size: 13px; font-weight: 700; }
+.task-body { flex: 1; }
+.task-text {
+  font-size: 15px;
+  color: var(--ink);
+  line-height: 1.4;
+  margin-bottom: 4px;
+}
+.task-meta {
+  font-size: 11px;
+  color: var(--muted);
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.task-author { font-weight: 600; color: var(--ink2); }
+.task-category {
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.cat-rezerwacja { background: var(--booking-light); color: var(--booking); }
+.cat-pakowanie  { background: var(--italian-green-light); color: var(--italian-green); }
+.cat-trasa      { background: #fff8e6; color: #8a6800; }
+.cat-inne       { background: var(--cream2); color: var(--muted); }
+.tasks-empty {
+  text-align: center;
+  padding: 48px 20px;
+  color: var(--muted);
+  font-size: 15px;
+  font-style: italic;
+}
+.tasks-filters {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.tasks-count {
+  background: var(--italian-green);
+  color: #fff;
+  border-radius: 12px;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  margin-left: 6px;
+}
+@media (max-width: 640px) {
+  .tabs-nav { padding: 0 16px; }
+  .tasks-wrap { padding: 24px 16px 60px; }
+  .task-add-row { flex-wrap: wrap; }
+  .task-author-input { width: 100%; }
+}
+
 </style>
 </head>
 <body>
@@ -428,6 +643,12 @@ footer {
 </div>
 
 <!-- MAP -->
+<nav class="tabs-nav">
+  <button class="tab-btn active" onclick="switchTab('noclegi', this)">🏠 Noclegi</button>
+  <button class="tab-btn" onclick="switchTab('zadania', this)">✅ Lista zadań <span class="tasks-count" id="tasks-count">0</span></button>
+</nav>
+
+<div id="tab-noclegi" class="tab-panel active">
 <div class="map-wrap">
   <div class="map-label">🇮🇹 Lokalizacje na mapie</div>
   <div id="map"></div>
@@ -987,6 +1208,50 @@ footer {
   <div class="no-results" id="no-results">Żaden obiekt nie spełnia wybranych kryteriów.</div>
 </main>
 
+</div><!-- /tab-noclegi -->
+
+<div id="tab-zadania" class="tab-panel">
+  <div class="tasks-wrap">
+    <div class="tasks-header">
+      <div>
+        <div class="tasks-title">Lista zadań 🇮🇹</div>
+        <div class="tasks-subtitle">Wspólna lista do ogarnięcia przed wyjazdem · widoczna dla wszystkich</div>
+      </div>
+    </div>
+
+    <div class="task-add-form">
+      <div class="task-add-title">Dodaj nowe zadanie</div>
+      <div class="task-add-row">
+        <input class="task-input" id="task-text-input" placeholder="Np. Sprawdzić czy psy mogą jechać..." maxlength="200">
+        <input class="task-author-input" id="task-author-input" placeholder="Twoje imię" maxlength="30">
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <span style="font-size:11px;color:var(--muted);align-self:center">Kategoria:</span>
+          <select id="task-cat-input" style="font-family:'Inter',sans-serif;font-size:12px;padding:6px 10px;border:1px solid var(--border);border-radius:8px;background:var(--cream);color:var(--ink);outline:none">
+            <option value="inne">Inne</option>
+            <option value="rezerwacja">Rezerwacja</option>
+            <option value="pakowanie">Pakowanie</option>
+            <option value="trasa">Trasa</option>
+          </select>
+        </div>
+        <button class="task-submit" onclick="addTask()">Dodaj zadanie →</button>
+      </div>
+    </div>
+
+    <div class="tasks-filters">
+      <span style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);align-self:center">Pokaż:</span>
+      <button class="filter-btn active" onclick="filterTasks('all',this)">Wszystkie</button>
+      <button class="filter-btn" onclick="filterTasks('todo',this)">Do zrobienia</button>
+      <button class="filter-btn" onclick="filterTasks('done',this)">Zrobione</button>
+    </div>
+
+    <div class="tasks-list" id="tasks-list">
+      <div class="tasks-empty">Brak zadań. Dodaj pierwsze!</div>
+    </div>
+  </div>
+</div><!-- /tab-zadania -->
+
 <footer>
   Toskania 2026 &nbsp;·&nbsp; <span style="color:#9ed4b0">🇮🇹</span> &nbsp;·&nbsp; Benvenuti in Toscana &nbsp;·&nbsp; Ceny mogą ulec zmianie
 </footer>
@@ -1327,6 +1592,133 @@ function startCardSliders() {
   });
 }
 
+
+// ── TABS
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-' + name).classList.add('active');
+  if (name === 'zadania') loadTasks();
+}
+
+// ── TASKS
+let currentTaskFilter = 'all';
+
+async function addTask() {
+  const textEl   = document.getElementById('task-text-input');
+  const authorEl = document.getElementById('task-author-input');
+  const catEl    = document.getElementById('task-cat-input');
+  const btn      = document.querySelector('.task-submit');
+
+  const text   = textEl.value.trim();
+  const author = authorEl.value.trim();
+  const cat    = catEl.value;
+
+  if (!text)   { textEl.focus(); textEl.style.borderColor = 'var(--italian-red)'; return; }
+  if (!author) { authorEl.focus(); authorEl.style.borderColor = 'var(--italian-red)'; return; }
+
+  btn.disabled = true; btn.textContent = '...';
+
+  const res = await sbFetch('tasks', {
+    method: 'POST',
+    body: JSON.stringify({ text, author, category: cat, done: false })
+  });
+
+  if (res) {
+    textEl.value = ''; authorEl.value = '';
+    textEl.style.borderColor = '';
+    authorEl.style.borderColor = '';
+    await loadTasks();
+  } else {
+    // fallback local
+    renderTaskLocal(text, author, cat);
+  }
+
+  btn.disabled = false; btn.textContent = 'Dodaj zadanie →';
+}
+
+async function toggleTask(id, currentDone) {
+  await sbFetch(`tasks?id=eq.${id}`, {
+    method: 'PATCH',
+    body: JSON.stringify({ done: !currentDone })
+  });
+  await loadTasks();
+}
+
+async function loadTasks() {
+  const rows = await sbFetch('tasks?order=created_at.asc&select=*');
+  if (!rows) return;
+  renderTasks(rows);
+  updateTaskCount(rows);
+}
+
+function updateTaskCount(tasks) {
+  const todo = tasks.filter(t => !t.done).length;
+  const el = document.getElementById('tasks-count');
+  if (el) el.textContent = todo;
+}
+
+function filterTasks(type, btn) {
+  document.querySelectorAll('.tasks-filters .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentTaskFilter = type;
+  document.querySelectorAll('.task-item').forEach(item => {
+    const done = item.dataset.done === 'true';
+    let show = false;
+    if      (type === 'all')  show = true;
+    else if (type === 'todo') show = !done;
+    else if (type === 'done') show = done;
+    item.style.display = show ? 'flex' : 'none';
+  });
+}
+
+function catLabel(cat) {
+  const map = { rezerwacja:'Rezerwacja', pakowanie:'Pakowanie', trasa:'Trasa', inne:'Inne' };
+  return map[cat] || 'Inne';
+}
+
+function renderTasks(tasks) {
+  const list = document.getElementById('tasks-list');
+  if (!list) return;
+  if (!tasks || tasks.length === 0) {
+    list.innerHTML = '<div class="tasks-empty">Brak zadań. Dodaj pierwsze!</div>';
+    return;
+  }
+  list.innerHTML = tasks.map(t => {
+    const d = new Date(t.created_at);
+    const dateStr = d.toLocaleDateString('pl-PL', { day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' });
+    const catClass = 'cat-' + (t.category || 'inne');
+    const show = currentTaskFilter === 'all' || (currentTaskFilter === 'todo' && !t.done) || (currentTaskFilter === 'done' && t.done);
+    return `<div class="task-item${t.done ? ' done' : ''}" data-done="${t.done}" data-id="${t.id}" style="display:${show ? 'flex' : 'none'}">
+      <div class="task-checkbox${t.done ? ' checked' : ''}" onclick="toggleTask(${t.id}, ${t.done})"></div>
+      <div class="task-body">
+        <div class="task-text">${escHtml(t.text)}</div>
+        <div class="task-meta">
+          <span class="task-author">${escHtml(t.author)}</span>
+          <span class="task-category ${catClass}">${catLabel(t.category)}</span>
+          <span>${dateStr}</span>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderTaskLocal(text, author, cat) {
+  const list = document.getElementById('tasks-list');
+  const item = document.createElement('div');
+  item.className = 'task-item';
+  item.dataset.done = 'false';
+  item.innerHTML = `<div class="task-checkbox"></div>
+    <div class="task-body">
+      <div class="task-text">${escHtml(text)}</div>
+      <div class="task-meta"><span class="task-author">${escHtml(author)}</span>
+      <span class="task-category cat-${cat}">${catLabel(cat)}</span></div>
+    </div>`;
+  if (list.querySelector('.tasks-empty')) list.innerHTML = '';
+  list.appendChild(item);
+}
+
 // ── INIT
 document.addEventListener('DOMContentLoaded', function() {
   document.querySelector('.slide').classList.add('active');
@@ -1336,6 +1728,8 @@ document.addEventListener('DOMContentLoaded', function() {
   startCardSliders();
   updateFavCount();
   loadAllData();
+  // Load task count for badge
+  sbFetch('tasks?select=id,done').then(rows => { if(rows) updateTaskCount(rows); });
 });
 </script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" onload="initLeafletMap()"></script>
