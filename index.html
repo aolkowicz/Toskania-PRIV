@@ -491,6 +491,11 @@ function sbFetch(path, opts = {}) {
   }).catch(e => { console.error('Supabase fetch error:', e); return null; });
 }
 
+// ─── HELPERS ───────────────────────────────────────────────────────────────
+function escHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
 // ─── STARS (interaktywne gwiazdki do oceniania) ────────────────────────
 const pendingStars = {}; // {id: rating}
 
@@ -753,9 +758,7 @@ function filter(type, btn) {
 }
 
 // ─── HELPERS ───────────────────────────────────────────────────────────
-function escHtml(str) {
-  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
+
 
 // ─── INIT ──────────────────────────────────────────────────────────────
 document.getElementById('setup-banner').style.display = 'none';
